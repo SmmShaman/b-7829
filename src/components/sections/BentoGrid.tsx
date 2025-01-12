@@ -119,7 +119,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-[80vw] mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-[80vw] mx-auto mt-[20vh]">
       {sections.map((section, index) => (
         <div
           key={section.id}
@@ -130,11 +130,11 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
             background: section.gradient,
           }}
         >
-          <div className="absolute inset-0 bg-black/80" />
+          <div className="absolute inset-0 bg-black/90" />
           <img 
             src={section.image} 
             alt={section.title} 
-            className="absolute inset-0 w-full h-full object-cover opacity-10"
+            className="absolute inset-0 w-full h-full object-cover opacity-5"
           />
           <div className="relative h-full p-6 flex flex-col justify-end text-white">
             <div className="mb-2">
@@ -143,6 +143,9 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
             <h2 className="text-2xl font-bold">
               {section.title}
             </h2>
+            <p className="mt-2 text-sm opacity-80">
+              {t(`${section.id}_content`)}
+            </p>
           </div>
         </div>
       ))}
