@@ -30,7 +30,7 @@ const Index = () => {
     <div className="h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white overflow-hidden">
       <Header />
       
-      <main className="flex-grow flex items-center justify-center" style={{ marginTop: '20vh', marginBottom: '10vh' }}>
+      <main className="flex-grow flex items-center justify-center relative">
         <BentoGrid 
           onSectionClick={handleCardClick}
           expandingCard={expandingCard}
