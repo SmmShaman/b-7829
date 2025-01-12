@@ -26,7 +26,7 @@
 
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   max-width: 1200px;
   width: 100%;
@@ -127,7 +127,7 @@
 
 @media (max-width: 768px) {
   .bento-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     padding: 1rem;
     height: auto;
@@ -163,6 +163,10 @@
 }
 
 @media (max-width: 480px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
   body {
     font-size: 14px;
   }

@@ -1,4 +1,4 @@
-import { BookOpen, Briefcase, Wrench, BarChart2, X } from "lucide-react";
+import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, X } from "lucide-react";
 import { useTranslations } from "@/hooks/useTranslations";
 import { useEffect, useRef } from "react";
 
@@ -52,6 +52,22 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       content: t("projects_content"),
       image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800",
       gradient: "linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)"
+    },
+    {
+      id: "testimonials",
+      title: t("testimonials"),
+      icon: <MessageSquare className="w-8 h-8" />,
+      content: t("testimonials_content"),
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800",
+      gradient: "linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)"
+    },
+    {
+      id: "contact",
+      title: t("contact"),
+      icon: <Mail className="w-8 h-8" />,
+      content: t("contact_content"),
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800",
+      gradient: "linear-gradient(90deg, hsla(29, 92%, 70%, 1) 0%, hsla(0, 87%, 73%, 1) 100%)"
     }
   ];
 
@@ -70,7 +86,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     });
 
     // Define snake movement order (left to right, then down, then up)
-    const snakeOrder = [0, 1, 2, 3];
+    const snakeOrder = [0, 1, 2, 5, 4, 3];
     
     // Animate through each card position
     for (const orderIndex of snakeOrder) {
