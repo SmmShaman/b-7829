@@ -20,17 +20,17 @@ const Index = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white">
+    <div className="h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white overflow-hidden">
       <Header />
       
-      <main className="flex-grow mt-[32vh] md:mt-[20vh] mb-16 p-4 md:p-8">
+      <main className="flex-grow flex items-center justify-center p-4 md:p-8">
         <BentoGrid 
           onSectionClick={handleCardClick}
           expandingCard={expandingCard}

@@ -89,3 +89,7 @@
   margin-top: 1.25em;
   margin-bottom: 1.25em;
 }
+
+body {
+  overflow: hidden;
+}
