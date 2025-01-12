@@ -18,7 +18,6 @@ const Index = () => {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [currentLanguage, setCurrentLanguage] = useState<Language>("EN");
 
-  // Update time every second
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
@@ -97,43 +96,45 @@ const Index = () => {
     { icon: <Linkedin className="w-6 h-6" />, url: "https://linkedin.com" },
   ];
 
+  const gradients = [
+    "linear-gradient(225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%)",
+    "linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)",
+    "linear-gradient(90deg, hsla(24, 100%, 83%, 1) 0%, hsla(341, 91%, 68%, 1) 100%)",
+    "linear-gradient(102.3deg, rgba(147,39,143,1) 5.9%, rgba(234,172,232,1) 64%)",
+    "linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)",
+    "linear-gradient(90deg, hsla(29, 92%, 70%, 1) 0%, hsla(0, 87%, 73%, 1) 100%)"
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#121212] text-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white">
       {/* Header */}
-      <header className="fixed top-0 w-full bg-[#1a1a1a] z-50">
-        <div className="w-full px-8 h-[20vh] flex flex-col justify-center">
-          <div className="flex flex-col items-center">
-            <h1 className="text-4xl font-bold mb-3">Vitalii Berbeha</h1>
-            <h2 className="text-2xl mb-4">{translations[currentLanguage].title}</h2>
-            <p className="text-gray-400 max-w-2xl text-center mb-4">
+      <header className="fixed top-0 w-full backdrop-blur-lg bg-black/30 z-50">
+        <div className="w-full px-8 h-[20vh] flex items-center justify-between">
+          <div className="flex-1 text-center">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-transparent bg-clip-text">
+              Vitalii Berbeha
+            </h1>
+            <h2 className="text-2xl mt-2 bg-gradient-to-r from-[#0EA5E9] to-[#F97316] text-transparent bg-clip-text">
+              {translations[currentLanguage].title}
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto mt-2 text-sm">
               {translations[currentLanguage].subtitle}
             </p>
           </div>
-          <div className="flex justify-end space-x-4">
-            <button
-              onClick={() => setCurrentLanguage("NO")}
-              className={`px-3 py-1 rounded ${
-                currentLanguage === "NO" ? "bg-blue-600" : "bg-gray-700"
-              }`}
-            >
-              NO
-            </button>
-            <button
-              onClick={() => setCurrentLanguage("EN")}
-              className={`px-3 py-1 rounded ${
-                currentLanguage === "EN" ? "bg-blue-600" : "bg-gray-700"
-              }`}
-            >
-              EN
-            </button>
-            <button
-              onClick={() => setCurrentLanguage("UA")}
-              className={`px-3 py-1 rounded ${
-                currentLanguage === "UA" ? "bg-blue-600" : "bg-gray-700"
-              }`}
-            >
-              UA
-            </button>
+          <div className="flex gap-2 absolute top-4 right-8">
+            {["NO", "EN", "UA"].map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setCurrentLanguage(lang as Language)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                  currentLanguage === lang
+                    ? "bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-white"
+                    : "bg-black/20 hover:bg-black/40 text-gray-300"
+                }`}
+              >
+                {lang}
+              </button>
+            ))}
           </div>
         </div>
       </header>
@@ -141,20 +142,29 @@ const Index = () => {
       {/* Main Content */}
       <main className="flex-grow mt-[20vh] mb-16 p-8">
         <div className="bento-grid">
-          {sections.map((section) => (
+          {sections.map((section, index) => (
             <div
               key={section.id}
               className="bento-card group cursor-pointer"
               onClick={() => setOpenSection(section.id)}
+              style={{
+                background: gradients[index % gradients.length],
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
+              }}
             >
+              <div className="absolute inset-0 bg-black/40 rounded-2xl transition-opacity group-hover:opacity-30" />
               <img 
                 src={section.image} 
                 alt={section.title} 
                 className="bento-card-image"
               />
               <div className="bento-card-content">
-                {section.icon}
-                <h2 className="text-xl font-semibold mt-4">{section.title}</h2>
+                <div className="text-white">
+                  {section.icon}
+                </div>
+                <h2 className="text-xl font-bold mt-4 text-white drop-shadow-lg">
+                  {section.title}
+                </h2>
               </div>
             </div>
           ))}
@@ -162,9 +172,9 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="fixed bottom-0 w-full bg-[#1a1a1a] p-4">
+      <footer className="fixed bottom-0 w-full backdrop-blur-lg bg-black/30 p-4">
         <div className="flex justify-center items-center space-x-6">
-          <p>{time.toLocaleTimeString()}</p>
+          <p className="text-gray-300">{time.toLocaleTimeString()}</p>
           <div className="flex space-x-4">
             {socialLinks.map((link, index) => (
               <a
@@ -172,7 +182,7 @@ const Index = () => {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-blue-400 transition-colors"
+                className="text-gray-300 hover:text-white transition-colors"
               >
                 {link.icon}
               </a>
@@ -184,9 +194,9 @@ const Index = () => {
       {/* Section Dialog */}
       {openSection && (
         <Dialog open={!!openSection} onOpenChange={() => setOpenSection(null)}>
-          <DialogContent className="w-full max-w-4xl mx-auto">
+          <DialogContent className="w-full max-w-4xl mx-auto bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d]">
             <DialogHeader>
-              <DialogTitle className="flex justify-between items-center">
+              <DialogTitle className="flex justify-between items-center text-white">
                 <span>{sections.find((s) => s.id === openSection)?.title}</span>
                 <button
                   onClick={() => setOpenSection(null)}
@@ -196,7 +206,7 @@ const Index = () => {
                 </button>
               </DialogTitle>
             </DialogHeader>
-            <div className="mt-4" dangerouslySetInnerHTML={{ 
+            <div className="mt-4 text-gray-200" dangerouslySetInnerHTML={{ 
               __html: sections.find((s) => s.id === openSection)?.content || '' 
             }} />
           </DialogContent>
