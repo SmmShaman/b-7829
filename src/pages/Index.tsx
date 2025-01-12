@@ -15,6 +15,7 @@ interface Section {
 const Index = () => {
   const [time, setTime] = useState(new Date());
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const [expandingCard, setExpandingCard] = useState<string | null>(null);
   const { t, currentLanguage, setCurrentLanguage, isLoading } = useTranslations();
 
   useEffect(() => {
@@ -81,6 +82,15 @@ const Index = () => {
     { icon: <Linkedin className="w-6 h-6" />, url: "https://linkedin.com" },
   ];
 
+  const handleCardClick = (sectionId: string) => {
+    setExpandingCard(sectionId);
+    // Wait for expansion animation to complete before showing dialog
+    setTimeout(() => {
+      setOpenSection(sectionId);
+      setExpandingCard(null);
+    }, 600);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -129,8 +139,8 @@ const Index = () => {
           {sections.map((section) => (
             <div
               key={section.id}
-              className="bento-card group cursor-pointer"
-              onClick={() => setOpenSection(section.id)}
+              className={`bento-card ${expandingCard === section.id ? 'expanding' : ''} ${expandingCard && expandingCard !== section.id ? 'shrinking' : ''}`}
+              onClick={() => handleCardClick(section.id)}
               style={{
                 background: section.gradient,
               }}

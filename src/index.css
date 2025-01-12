@@ -54,6 +54,23 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.bento-card.expanding {
+  position: fixed;
+  z-index: 50;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  width: calc(100% - 4rem);
+  height: calc(100vh - 16rem);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bento-card.shrinking {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
 .bento-card:hover {
   transform: translateY(-8px) scale(1.02);
   border-color: rgba(255, 255, 255, 0.2);
@@ -97,6 +114,10 @@
     padding: 1.5rem;
     height: calc(100vh - 14rem);
   }
+
+  .bento-card.expanding {
+    width: calc(100% - 3rem);
+  }
 }
 
 @media (max-width: 768px) {
@@ -110,6 +131,10 @@
   .bento-card {
     min-height: 150px;
     padding: 1.5rem;
+  }
+
+  .bento-card.expanding {
+    width: calc(100% - 2rem);
   }
 
   [data-radix-dialog-content] {
