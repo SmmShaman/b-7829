@@ -101,15 +101,15 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-[#121212] text-white">
       {/* Header */}
       <header className="fixed top-0 w-full bg-[#1a1a1a] z-50">
-        <div className="w-full px-8 py-6">
-          <div className="flex flex-col items-center mb-4">
-            <h1 className="text-3xl font-bold mb-2">Vitalii Berbeha</h1>
-            <h2 className="text-xl mb-3">{translations[currentLanguage].title}</h2>
-            <p className="text-gray-400 max-w-2xl text-center">
+        <div className="w-full px-8 h-[20vh] flex flex-col justify-center">
+          <div className="flex flex-col items-center">
+            <h1 className="text-4xl font-bold mb-3">Vitalii Berbeha</h1>
+            <h2 className="text-2xl mb-4">{translations[currentLanguage].title}</h2>
+            <p className="text-gray-400 max-w-2xl text-center mb-4">
               {translations[currentLanguage].subtitle}
             </p>
           </div>
-          <div className="flex justify-end space-x-4 mt-4">
+          <div className="flex justify-end space-x-4">
             <button
               onClick={() => setCurrentLanguage("NO")}
               className={`px-3 py-1 rounded ${
@@ -139,7 +139,7 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow mt-48 mb-16 p-8">
+      <main className="flex-grow mt-[20vh] mb-16 p-8">
         <div className="bento-grid">
           {sections.map((section) => (
             <div
