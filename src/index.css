@@ -51,6 +51,11 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Dialog styles */
+[data-radix-dialog-content] {
+  animation: none !important;
+}
+
 @media (max-width: 1024px) {
   .bento-grid {
     grid-template-columns: repeat(2, 1fr);

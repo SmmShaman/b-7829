@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, X } from "lucide-react";
+import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, Github, Linkedin, Twitter } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { translations } from "@/utils/translations";
 
 interface Section {
   id: string;
@@ -12,12 +13,18 @@ interface Section {
 const Index = () => {
   const [time, setTime] = useState(new Date());
   const [openSection, setOpenSection] = useState<string | null>(null);
-  const [currentLanguage, setCurrentLanguage] = useState<"EN" | "UA" | "NO">("EN");
+  const [currentLanguage, setCurrentLanguage] = useState<"EN" | "UA" | "RU">("EN");
+
+  // Update time every second
+  useState(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const sections: Section[] = [
     {
       id: "about",
-      title: "About Me",
+      title: translations[currentLanguage].about,
       icon: <BookOpen className="w-8 h-8" />,
       content: (
         <div className="space-y-4">
@@ -97,11 +104,18 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-[#121212] text-white">
       {/* Header */}
       <header className="fixed top-0 w-full bg-[#1a1a1a] p-4 z-50">
+        <div className="flex flex-col items-center mb-4">
+          <h1 className="text-2xl font-bold">Vitalii Berbeha</h1>
+          <h2 className="text-xl">{translations[currentLanguage].title}</h2>
+          <p className="text-gray-400 mt-2 max-w-2xl text-center">
+            {translations[currentLanguage].subtitle}
+          </p>
+        </div>
         <div className="flex justify-end space-x-4">
-          {["EN", "UA", "NO"].map((lang) => (
+          {["EN", "UA", "RU"].map((lang) => (
             <button
               key={lang}
-              onClick={() => setCurrentLanguage(lang as "EN" | "UA" | "NO")}
+              onClick={() => setCurrentLanguage(lang as "EN" | "UA" | "RU")}
               className={`px-3 py-1 rounded ${
                 currentLanguage === lang ? "bg-blue-600" : "bg-gray-700"
               }`}
@@ -113,7 +127,7 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow mt-16 mb-16 p-8">
+      <main className="flex-grow mt-40 mb-16 p-8">
         <div className="bento-grid">
           {sections.map((section) => (
             <div
@@ -131,13 +145,26 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="fixed bottom-0 w-full bg-[#1a1a1a] p-4 text-center">
-        <p>{time.toLocaleTimeString()}</p>
+      <footer className="fixed bottom-0 w-full bg-[#1a1a1a] p-4">
+        <div className="flex justify-center items-center space-x-6">
+          <p>{time.toLocaleTimeString()}</p>
+          <div className="flex space-x-4">
+            <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+              <Github className="w-6 h-6 hover:text-blue-400 transition-colors" />
+            </a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+              <Linkedin className="w-6 h-6 hover:text-blue-400 transition-colors" />
+            </a>
+            <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">
+              <Twitter className="w-6 h-6 hover:text-blue-400 transition-colors" />
+            </a>
+          </div>
+        </div>
       </footer>
 
       {/* Section Dialog */}
       <Dialog open={!!openSection} onOpenChange={() => setOpenSection(null)}>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="fixed inset-y-[64px] max-w-full h-[calc(100vh-128px)] m-0 rounded-none">
           <DialogHeader>
             <DialogTitle>
               {sections.find((s) => s.id === openSection)?.title}
