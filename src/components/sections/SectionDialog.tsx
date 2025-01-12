@@ -1,6 +1,7 @@
 import { useTranslations } from "@/hooks/useTranslations";
 import { X } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import ContactForm from "./ContactForm";
 
 interface SectionDialogProps {
   openSection: string | null;
@@ -28,14 +29,18 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
         
         <ScrollArea className="h-[80vh] w-full">
           <div className="p-8">
-            <div className="prose prose-invert max-w-none">
-              <h2 className="text-3xl font-bold mb-6 text-white">
-                {t(openSection)}
-              </h2>
-              <div className="text-lg leading-relaxed text-white/90">
-                {t(`${openSection}_content`)}
+            {openSection === "contact" ? (
+              <ContactForm />
+            ) : (
+              <div className="prose prose-invert max-w-none">
+                <h2 className="text-3xl font-bold mb-6 text-white">
+                  {t(openSection)}
+                </h2>
+                <div className="text-lg leading-relaxed text-white/90">
+                  {t(`${openSection}_content`)}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </ScrollArea>
       </div>
