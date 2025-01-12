@@ -3,30 +3,48 @@ export const translations = {
     title: "Marketing and Analytics Expert | Creator of Elvarika",
     subtitle: "I help implement innovations and develop business solutions by combining marketing, analytics and modern technologies",
     about: "About Me",
+    aboutContent: "I am a marketing and analytics expert with extensive experience in implementing innovative solutions.",
     projects: "Projects",
+    projectsContent: "Elvarika - An innovative platform for business analytics and marketing automation.",
     services: "Services",
+    servicesContent: "Marketing strategy, Analytics implementation, Business development",
     skills: "Skills",
+    skillsContent: "Digital Marketing, Data Analytics, Project Management, Business Strategy",
     testimonials: "Testimonials",
-    contact: "Contact"
+    testimonialsContent: "What our clients say about our services and solutions",
+    contact: "Contact",
+    contactContent: "Get in touch with me to discuss your project"
   },
   UA: {
     title: "Експерт з маркетингу та аналітики | Творець Elvarika",
     subtitle: "Я допомагаю впроваджувати інновації та розробляти рішення для бізнесу, поєднуючи маркетинг, аналітику та сучасні технології",
     about: "Про мене",
+    aboutContent: "Я експерт з маркетингу та аналітики з великим досвідом впровадження інноваційних рішень.",
     projects: "Проекти",
+    projectsContent: "Elvarika - Інноваційна платформа для бізнес-аналітики та автоматизації маркетингу.",
     services: "Послуги",
+    servicesContent: "Маркетингова стратегія, Впровадження аналітики, Розвиток бізнесу",
     skills: "Навички",
+    skillsContent: "Цифровий маркетинг, Аналіз даних, Управління проектами, Бізнес-стратегія",
     testimonials: "Відгуки",
-    contact: "Контакти"
+    testimonialsContent: "Що кажуть наші клієнти про наші послуги та рішення",
+    contact: "Контакти",
+    contactContent: "Зв'яжіться зі мною, щоб обговорити ваш проект"
   },
-  RU: {
-    title: "Эксперт в маркетинге и аналитике | Создатель Elvarika",
-    subtitle: "Я помогаю внедрять инновации и разрабатывать решения для бизнеса, совмещая маркетинг, аналитику и современные технологии",
-    about: "Обо мне",
-    projects: "Проекты",
-    services: "Услуги",
-    skills: "Навыки",
-    testimonials: "Отзывы",
-    contact: "Контакты"
+  NO: {
+    title: "Markeds- og analyseekspert | Skaper av Elvarika",
+    subtitle: "Jeg hjelper med å implementere innovasjoner og utvikle forretningsløsninger ved å kombinere markedsføring, analyse og moderne teknologi",
+    about: "Om meg",
+    aboutContent: "Jeg er en markeds- og analyseekspert med omfattende erfaring i implementering av innovative løsninger.",
+    projects: "Prosjekter",
+    projectsContent: "Elvarika - En innovativ plattform for forretningsanalyse og markedsføringsautomatisering.",
+    services: "Tjenester",
+    servicesContent: "Markedsstrategi, Analyseimplementering, Forretningsutvikling",
+    skills: "Ferdigheter",
+    skillsContent: "Digital markedsføring, Dataanalyse, Prosjektledelse, Forretningsstrategi",
+    testimonials: "Anbefalinger",
+    testimonialsContent: "Hva våre kunder sier om våre tjenester og løsninger",
+    contact: "Kontakt",
+    contactContent: "Ta kontakt med meg for å diskutere prosjektet ditt"
   }
 };
