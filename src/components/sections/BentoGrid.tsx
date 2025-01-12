@@ -33,7 +33,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       id: "projects",
       title: t("projects"),
       icon: <Briefcase className="w-8 h-8" />,
-      content: "",
+      content: t("projects_content"),
       image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800",
       gradient: "linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)"
     },
@@ -57,7 +57,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       id: "testimonials",
       title: t("testimonials"),
       icon: <MessageSquare className="w-8 h-8" />,
-      content: "",
+      content: t("testimonials_content"),
       image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800",
       gradient: "linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)"
     },
@@ -78,18 +78,18 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     // Start snake animation
     clickedCard.classList.add('snake-animation');
     
-    // Calculate positions for clockwise snake movement
+    // Calculate positions for snake movement
     const cards = Array.from(cardRefs.current.values());
     const positions = cards.map(card => {
       const rect = card.getBoundingClientRect();
       return { x: rect.left, y: rect.top };
     });
 
-    // Define clockwise order based on grid layout (2x3 grid)
-    const clockwiseOrder = [0, 1, 2, 5, 4, 3];
+    // Define snake movement order (left to right, then down, then up)
+    const snakeOrder = [0, 1, 2, 5, 4, 3];
     
-    // Animate through each card position in clockwise order
-    for (const orderIndex of clockwiseOrder) {
+    // Animate through each card position
+    for (const orderIndex of snakeOrder) {
       if (orderIndex === index) continue;
       
       const pos = positions[orderIndex];
@@ -97,14 +97,12 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       clickedCard.style.transform = `translate(${pos.x - startPos.x}px, ${pos.y - startPos.y}px)`;
       cards[orderIndex].classList.add('eaten');
       
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise(resolve => setTimeout(resolve, 300)); // Increased delay for smoother animation
     }
 
-    // Move to top-left corner
+    // Move to final position and expand
     clickedCard.style.transform = 'translate(0, 0)';
     await new Promise(resolve => setTimeout(resolve, 300));
-
-    // Final diagonal expansion animation
     clickedCard.classList.add('snake-expanded');
 
     // Trigger the section change
@@ -148,9 +146,6 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
             <h2 className="text-xl font-bold mt-4 text-white drop-shadow-lg">
               {section.title}
             </h2>
-            <p className="mt-2 text-sm text-white/90 line-clamp-2">
-              {section.content}
-            </p>
           </div>
         </div>
       ))}
