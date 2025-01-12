@@ -1,5 +1,6 @@
 import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail } from "lucide-react";
 import { useTranslations } from "@/hooks/useTranslations";
+import { useEffect, useRef } from "react";
 
 interface Section {
   id: string;
@@ -17,6 +18,7 @@ interface BentoGridProps {
 
 const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   const { t } = useTranslations();
+  const cardRefs = useRef<Map<string, HTMLDivElement>>(new Map());
 
   const sections: Section[] = [
     {
@@ -69,13 +71,59 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     },
   ];
 
+  const handleCardClick = async (sectionId: string, index: number) => {
+    const clickedCard = cardRefs.current.get(sectionId);
+    if (!clickedCard) return;
+
+    // Start snake animation
+    clickedCard.classList.add('snake-animation');
+    
+    // Calculate positions for snake movement
+    const cards = Array.from(cardRefs.current.values());
+    const positions = cards.map(card => {
+      const rect = card.getBoundingClientRect();
+      return { x: rect.left, y: rect.top };
+    });
+
+    // Animate through each card position
+    for (let i = 0; i < positions.length; i++) {
+      if (i === index) continue;
+      
+      const pos = positions[i];
+      clickedCard.style.transform = `translate(${pos.x - positions[index].x}px, ${pos.y - positions[index].y}px)`;
+      cards[i].classList.add('eaten');
+      
+      await new Promise(resolve => setTimeout(resolve, 200));
+    }
+
+    // Final expansion animation
+    await new Promise(resolve => setTimeout(resolve, 300));
+    clickedCard.classList.add('snake-expanded');
+
+    // Trigger the section change
+    setTimeout(() => {
+      onSectionClick(sectionId);
+    }, 800);
+  };
+
+  useEffect(() => {
+    if (!expandingCard) {
+      // Reset all cards when closing
+      cardRefs.current.forEach(card => {
+        card.classList.remove('snake-animation', 'snake-expanded', 'eaten');
+        card.style.transform = '';
+      });
+    }
+  }, [expandingCard]);
+
   return (
     <div className="bento-grid">
-      {sections.map((section) => (
+      {sections.map((section, index) => (
         <div
           key={section.id}
-          className={`bento-card ${expandingCard === section.id ? 'expanding' : ''} ${expandingCard && expandingCard !== section.id ? 'shrinking' : ''}`}
-          onClick={() => onSectionClick(section.id)}
+          ref={el => el && cardRefs.current.set(section.id, el)}
+          className="bento-card"
+          onClick={() => handleCardClick(section.id, index)}
           style={{
             background: section.gradient,
           }}
