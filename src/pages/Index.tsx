@@ -39,12 +39,13 @@ const Index = () => {
       sceneRef.current = new THREE.Scene();
       cameraRef.current = new THREE.PerspectiveCamera(75, avatarRef.current.clientWidth / avatarRef.current.clientHeight, 0.1, 1000);
       
-      // Try to create WebGL renderer with fallback
       try {
         rendererRef.current = new THREE.WebGLRenderer({ 
           antialias: true,
           alpha: true,
           canvas: document.createElement('canvas'),
+          powerPreference: "default",
+          failIfMajorPerformanceCaveat: false
         });
       } catch (error) {
         console.error('WebGL initialization failed:', error);
@@ -99,65 +100,41 @@ const Index = () => {
     }
   }, [webGLError]);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (avatarRef.current && sceneRef.current && cameraRef.current) {
-        const { clientX, clientY } = e;
-        const { left, top, width, height } = avatarRef.current.getBoundingClientRect();
-        
-        const centerX = left + width / 2;
-        const centerY = top + height / 2;
-        
-        const angleX = (clientY - centerY) / 20;
-        const angleY = (clientX - centerX) / 20;
-        
-        // Update camera or model rotation based on mouse position
-        if (sceneRef.current.children[0]) {
-          sceneRef.current.children[0].rotation.x = -angleX * 0.1;
-          sceneRef.current.children[0].rotation.y = angleY * 0.1;
-        }
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   const sections: Section[] = [
     {
       id: "about",
       title: translations[currentLanguage].about,
       icon: <BookOpen className="w-8 h-8" />,
       content: translations[currentLanguage].aboutContent,
-      image: "/images/about-bg.jpg"
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800"
     },
     {
       id: "projects",
       title: translations[currentLanguage].projects,
       icon: <Briefcase className="w-8 h-8" />,
       content: translations[currentLanguage].projectsContent,
-      image: "/images/projects-bg.jpg"
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800"
     },
     {
       id: "services",
       title: translations[currentLanguage].services,
       icon: <Wrench className="w-8 h-8" />,
       content: translations[currentLanguage].servicesContent,
-      image: "/images/services-bg.jpg"
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800"
     },
     {
       id: "skills",
       title: translations[currentLanguage].skills,
       icon: <BarChart2 className="w-8 h-8" />,
       content: translations[currentLanguage].skillsContent,
-      image: "/images/skills-bg.jpg"
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800"
     },
     {
       id: "testimonials",
       title: translations[currentLanguage].testimonials,
       icon: <MessageSquare className="w-8 h-8" />,
       content: translations[currentLanguage].testimonialsContent,
-      image: "/images/testimonials-bg.jpg"
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800"
     },
     {
       id: "contact",
@@ -184,24 +161,24 @@ const Index = () => {
           </div>
         </form>
       `,
-      image: "/images/contact-bg.jpg"
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800"
     },
   ];
 
   const socialLinks = [
     { icon: <Twitter className="w-6 h-6" />, url: "https://twitter.com" },
     { icon: <Facebook className="w-6 h-6" />, url: "https://facebook.com" },
-    { icon: <MessageCircle className="w-6 h-6" />, url: "https://t.me" }, // Using MessageCircle instead of Telegram
+    { icon: <MessageCircle className="w-6 h-6" />, url: "https://t.me" },
     { icon: <Instagram className="w-6 h-6" />, url: "https://instagram.com" },
     { icon: <Linkedin className="w-6 h-6" />, url: "https://linkedin.com" },
   ];
 
   return (
     <div className="min-h-screen flex flex-col bg-[#121212] text-white">
-      {/* 3D Avatar */}
+      {/* 3D Avatar - Only visible on desktop */}
       <div 
         ref={avatarRef} 
-        className="fixed left-0 top-0 bottom-0 w-1/4 h-screen"
+        className="fixed left-0 top-0 bottom-0 w-1/4 h-screen hidden lg:block"
         style={{ perspective: '1000px' }}
       >
         {webGLError && (
@@ -211,6 +188,7 @@ const Index = () => {
         )}
       </div>
 
+      {/* Header */}
       <header className="fixed top-0 w-full bg-[#1a1a1a] p-4 z-50">
         <div className="flex flex-col items-center mb-4">
           <h1 className="text-2xl font-bold">Vitalii Berbeha</h1>
@@ -256,7 +234,11 @@ const Index = () => {
               className="bento-card group cursor-pointer"
               onClick={() => setOpenSection(section.id)}
             >
-              <img src={section.image} alt={section.title} className="bento-card-image" />
+              <img 
+                src={section.image} 
+                alt={section.title} 
+                className="bento-card-image"
+              />
               <div className="bento-card-content">
                 {section.icon}
                 <h2 className="text-xl font-semibold mt-4">{section.title}</h2>
