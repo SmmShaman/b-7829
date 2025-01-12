@@ -36,69 +36,101 @@ const Index = () => {
 
     try {
       // Scene setup
-      sceneRef.current = new THREE.Scene();
-      cameraRef.current = new THREE.PerspectiveCamera(75, avatarRef.current.clientWidth / avatarRef.current.clientHeight, 0.1, 1000);
-      
-      try {
-        rendererRef.current = new THREE.WebGLRenderer({ 
-          antialias: true,
-          alpha: true,
-          canvas: document.createElement('canvas'),
-          powerPreference: "default",
-          failIfMajorPerformanceCaveat: false
-        });
-      } catch (error) {
-        console.error('WebGL initialization failed:', error);
-        setWebGLError(true);
-        return;
-      }
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        avatarRef.current.clientWidth / avatarRef.current.clientHeight,
+        0.1,
+        1000
+      );
 
-      if (!rendererRef.current) {
-        setWebGLError(true);
-        return;
-      }
-      
-      rendererRef.current.setSize(avatarRef.current.clientWidth, avatarRef.current.clientHeight);
-      avatarRef.current.appendChild(rendererRef.current.domElement);
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+        powerPreference: "default",
+      });
 
-      // Add a simple sphere for testing
-      const geometry = new THREE.SphereGeometry(1, 32, 32);
-      const material = new THREE.MeshPhongMaterial({ color: 0x808080 });
-      const sphere = new THREE.Mesh(geometry, material);
-      sceneRef.current.add(sphere);
+      renderer.setSize(avatarRef.current.clientWidth, avatarRef.current.clientHeight);
+      avatarRef.current.appendChild(renderer.domElement);
+
+      // Create a head-like shape
+      const headGeometry = new THREE.SphereGeometry(1, 32, 32);
+      const headMaterial = new THREE.MeshPhongMaterial({
+        color: 0xf4d03f,
+        shininess: 100,
+      });
+      const head = new THREE.Mesh(headGeometry, headMaterial);
+      scene.add(head);
+
+      // Add eyes
+      const eyeGeometry = new THREE.SphereGeometry(0.2, 32, 32);
+      const eyeMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+      
+      const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+      leftEye.position.set(-0.3, 0.2, 0.8);
+      head.add(leftEye);
+
+      const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+      rightEye.position.set(0.3, 0.2, 0.8);
+      head.add(rightEye);
 
       // Add lights
-      const light = new THREE.DirectionalLight(0xffffff, 1);
-      light.position.set(0, 1, 2);
-      sceneRef.current.add(light);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(0, 1, 2);
+      scene.add(directionalLight);
       
       const ambientLight = new THREE.AmbientLight(0x404040);
-      sceneRef.current.add(ambientLight);
+      scene.add(ambientLight);
 
-      cameraRef.current.position.z = 5;
+      camera.position.z = 3;
+
+      // Mouse movement handler
+      const handleMouseMove = (event: MouseEvent) => {
+        const rect = avatarRef.current?.getBoundingClientRect();
+        if (!rect) return;
+
+        const mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        const mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+        // Rotate head to follow mouse
+        head.rotation.y = mouseX * 0.5;
+        head.rotation.x = mouseY * 0.5;
+      };
+
+      window.addEventListener('mousemove', handleMouseMove);
 
       // Animation loop
       const animate = () => {
-        if (webGLError) return;
-        
         requestAnimationFrame(animate);
-        if (rendererRef.current && sceneRef.current && cameraRef.current) {
-          rendererRef.current.render(sceneRef.current, cameraRef.current);
-        }
+        renderer.render(scene, camera);
       };
       animate();
 
+      // Handle window resize
+      const handleResize = () => {
+        if (!avatarRef.current) return;
+        
+        camera.aspect = avatarRef.current.clientWidth / avatarRef.current.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(avatarRef.current.clientWidth, avatarRef.current.clientHeight);
+      };
+
+      window.addEventListener('resize', handleResize);
+
       // Cleanup
       return () => {
-        if (rendererRef.current && avatarRef.current) {
-          avatarRef.current.removeChild(rendererRef.current.domElement);
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('resize', handleResize);
+        renderer.dispose();
+        if (avatarRef.current?.contains(renderer.domElement)) {
+          avatarRef.current.removeChild(renderer.domElement);
         }
       };
     } catch (error) {
-      console.error('Scene setup failed:', error);
+      console.error('Three.js initialization failed:', error);
       setWebGLError(true);
     }
-  }, [webGLError]);
+  }, []);
 
   const sections: Section[] = [
     {
