@@ -11,6 +11,7 @@ interface Section {
   icon: React.ReactNode;
   content: string;
   image: string;
+  gradient: string;
 }
 
 const Index = () => {
@@ -29,35 +30,40 @@ const Index = () => {
       title: translations[currentLanguage].about,
       icon: <BookOpen className="w-8 h-8" />,
       content: translations[currentLanguage].aboutContent,
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800"
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800",
+      gradient: "linear-gradient(225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%)"
     },
     {
       id: "projects",
       title: translations[currentLanguage].projects,
       icon: <Briefcase className="w-8 h-8" />,
       content: translations[currentLanguage].projectsContent,
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800"
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800",
+      gradient: "linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)"
     },
     {
       id: "services",
       title: translations[currentLanguage].services,
       icon: <Wrench className="w-8 h-8" />,
       content: translations[currentLanguage].servicesContent,
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800"
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800",
+      gradient: "linear-gradient(90deg, hsla(24, 100%, 83%, 1) 0%, hsla(341, 91%, 68%, 1) 100%)"
     },
     {
       id: "skills",
       title: translations[currentLanguage].skills,
       icon: <BarChart2 className="w-8 h-8" />,
       content: translations[currentLanguage].skillsContent,
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800"
+      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800",
+      gradient: "linear-gradient(102.3deg, rgba(147,39,143,1) 5.9%, rgba(234,172,232,1) 64%)"
     },
     {
       id: "testimonials",
       title: translations[currentLanguage].testimonials,
       icon: <MessageSquare className="w-8 h-8" />,
       content: translations[currentLanguage].testimonialsContent,
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800"
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800",
+      gradient: "linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)"
     },
     {
       id: "contact",
@@ -84,7 +90,8 @@ const Index = () => {
           </div>
         </form>
       `,
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800"
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800",
+      gradient: "linear-gradient(90deg, hsla(29, 92%, 70%, 1) 0%, hsla(0, 87%, 73%, 1) 100%)"
     },
   ];
 
@@ -94,15 +101,6 @@ const Index = () => {
     { icon: <MessageCircle className="w-6 h-6" />, url: "https://t.me" },
     { icon: <Instagram className="w-6 h-6" />, url: "https://instagram.com" },
     { icon: <Linkedin className="w-6 h-6" />, url: "https://linkedin.com" },
-  ];
-
-  const gradients = [
-    "linear-gradient(225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%)",
-    "linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)",
-    "linear-gradient(90deg, hsla(24, 100%, 83%, 1) 0%, hsla(341, 91%, 68%, 1) 100%)",
-    "linear-gradient(102.3deg, rgba(147,39,143,1) 5.9%, rgba(234,172,232,1) 64%)",
-    "linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)",
-    "linear-gradient(90deg, hsla(29, 92%, 70%, 1) 0%, hsla(0, 87%, 73%, 1) 100%)"
   ];
 
   return (
@@ -148,7 +146,7 @@ const Index = () => {
               className="bento-card group cursor-pointer"
               onClick={() => setOpenSection(section.id)}
               style={{
-                background: gradients[index % gradients.length],
+                background: section.gradient,
                 boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
               }}
             >
@@ -194,7 +192,12 @@ const Index = () => {
       {/* Section Dialog */}
       {openSection && (
         <Dialog open={!!openSection} onOpenChange={() => setOpenSection(null)}>
-          <DialogContent className="w-full max-w-4xl mx-auto bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d]">
+          <DialogContent 
+            className="w-full max-w-4xl mx-auto"
+            style={{
+              background: sections.find(s => s.id === openSection)?.gradient,
+            }}
+          >
             <DialogHeader>
               <DialogTitle className="flex justify-between items-center text-white">
                 <span>{sections.find((s) => s.id === openSection)?.title}</span>
@@ -206,9 +209,13 @@ const Index = () => {
                 </button>
               </DialogTitle>
             </DialogHeader>
-            <div className="mt-4 text-gray-200" dangerouslySetInnerHTML={{ 
-              __html: sections.find((s) => s.id === openSection)?.content || '' 
-            }} />
+            <div 
+              className="mt-4 text-white relative z-10" 
+              dangerouslySetInnerHTML={{ 
+                __html: sections.find((s) => s.id === openSection)?.content || '' 
+              }} 
+            />
+            <div className="absolute inset-0 bg-black/20 rounded-lg z-0" />
           </DialogContent>
         </Dialog>
       )}
