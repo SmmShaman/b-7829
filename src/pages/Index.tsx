@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, Twitter, Facebook, MessageCircle, Linkedin, Instagram } from "lucide-react";
+import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, Twitter, Facebook, MessageCircle, Linkedin, Instagram, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { translations } from "@/utils/translations";
 import * as THREE from "three";
@@ -22,6 +22,7 @@ const Index = () => {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const [webGLError, setWebGLError] = useState(false);
 
   // Update time every second
   useEffect(() => {
@@ -33,48 +34,71 @@ const Index = () => {
   useEffect(() => {
     if (!avatarRef.current) return;
 
-    // Scene setup
-    sceneRef.current = new THREE.Scene();
-    cameraRef.current = new THREE.PerspectiveCamera(75, avatarRef.current.clientWidth / avatarRef.current.clientHeight, 0.1, 1000);
-    rendererRef.current = new THREE.WebGLRenderer({ antialias: true });
-    
-    rendererRef.current.setSize(avatarRef.current.clientWidth, avatarRef.current.clientHeight);
-    avatarRef.current.appendChild(rendererRef.current.domElement);
-
-    // Add a simple sphere for testing
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
-    const material = new THREE.MeshPhongMaterial({ color: 0x808080 });
-    const sphere = new THREE.Mesh(geometry, material);
-    sceneRef.current.add(sphere);
-
-    // Add lights
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(0, 1, 2);
-    sceneRef.current.add(light);
-    
-    const ambientLight = new THREE.AmbientLight(0x404040);
-    sceneRef.current.add(ambientLight);
-
-    cameraRef.current.position.z = 5;
-
-    // Animation loop
-    const animate = () => {
-      requestAnimationFrame(animate);
-      if (rendererRef.current && sceneRef.current && cameraRef.current) {
-        rendererRef.current.render(sceneRef.current, cameraRef.current);
+    try {
+      // Scene setup
+      sceneRef.current = new THREE.Scene();
+      cameraRef.current = new THREE.PerspectiveCamera(75, avatarRef.current.clientWidth / avatarRef.current.clientHeight, 0.1, 1000);
+      
+      // Try to create WebGL renderer with fallback
+      try {
+        rendererRef.current = new THREE.WebGLRenderer({ 
+          antialias: true,
+          alpha: true,
+          canvas: document.createElement('canvas'),
+        });
+      } catch (error) {
+        console.error('WebGL initialization failed:', error);
+        setWebGLError(true);
+        return;
       }
-    };
-    animate();
 
-    // Cleanup
-    return () => {
-      if (rendererRef.current && avatarRef.current) {
-        avatarRef.current.removeChild(rendererRef.current.domElement);
+      if (!rendererRef.current) {
+        setWebGLError(true);
+        return;
       }
-    };
-  }, []);
+      
+      rendererRef.current.setSize(avatarRef.current.clientWidth, avatarRef.current.clientHeight);
+      avatarRef.current.appendChild(rendererRef.current.domElement);
 
-  // Handle cursor tracking for 3D avatar
+      // Add a simple sphere for testing
+      const geometry = new THREE.SphereGeometry(1, 32, 32);
+      const material = new THREE.MeshPhongMaterial({ color: 0x808080 });
+      const sphere = new THREE.Mesh(geometry, material);
+      sceneRef.current.add(sphere);
+
+      // Add lights
+      const light = new THREE.DirectionalLight(0xffffff, 1);
+      light.position.set(0, 1, 2);
+      sceneRef.current.add(light);
+      
+      const ambientLight = new THREE.AmbientLight(0x404040);
+      sceneRef.current.add(ambientLight);
+
+      cameraRef.current.position.z = 5;
+
+      // Animation loop
+      const animate = () => {
+        if (webGLError) return;
+        
+        requestAnimationFrame(animate);
+        if (rendererRef.current && sceneRef.current && cameraRef.current) {
+          rendererRef.current.render(sceneRef.current, cameraRef.current);
+        }
+      };
+      animate();
+
+      // Cleanup
+      return () => {
+        if (rendererRef.current && avatarRef.current) {
+          avatarRef.current.removeChild(rendererRef.current.domElement);
+        }
+      };
+    } catch (error) {
+      console.error('Scene setup failed:', error);
+      setWebGLError(true);
+    }
+  }, [webGLError]);
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (avatarRef.current && sceneRef.current && cameraRef.current) {
@@ -179,7 +203,13 @@ const Index = () => {
         ref={avatarRef} 
         className="fixed left-0 top-0 bottom-0 w-1/4 h-screen"
         style={{ perspective: '1000px' }}
-      />
+      >
+        {webGLError && (
+          <div className="flex items-center justify-center h-full text-gray-400">
+            3D avatar unavailable
+          </div>
+        )}
+      </div>
 
       <header className="fixed top-0 w-full bg-[#1a1a1a] p-4 z-50">
         <div className="flex flex-col items-center mb-4">
