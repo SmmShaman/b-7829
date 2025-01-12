@@ -4,8 +4,8 @@ const Header = () => {
   const { t, currentLanguage, setCurrentLanguage } = useTranslations();
 
   return (
-    <header className="fixed top-0 w-full glass-effect z-50">
-      <div className="w-full px-4 md:px-8 py-4 md:h-[20vh] flex flex-col md:flex-row items-center justify-between">
+    <header className="fixed top-0 w-full glass-effect z-50 h-[20vh]">
+      <div className="w-full h-full px-4 md:px-8 py-4 flex flex-col md:flex-row items-center justify-between">
         <div className="flex-1 text-center">
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-transparent bg-clip-text animate-fade-in">
             Vitalii Berbeha
@@ -17,7 +17,7 @@ const Header = () => {
             {t("subtitle")}
           </p>
         </div>
-        <div className="flex gap-2 mt-4 md:mt-0 md:absolute md:top-4 md:right-8">
+        <div className="flex gap-2 mt-4 md:mt-0">
           {["NO", "EN", "UA"].map((lang) => (
             <button
               key={lang}
