@@ -27,7 +27,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       icon: <BookOpen className="w-8 h-8" />,
       content: t("about_content"),
       image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800",
-      gradient: "linear-gradient(225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%)"
+      gradient: "linear-gradient(225deg, rgba(255,226,159,0.3) 0%, rgba(255,169,159,0.3) 48%, rgba(255,113,154,0.3) 100%)"
     },
     {
       id: "services",
@@ -35,7 +35,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       icon: <Wrench className="w-8 h-8" />,
       content: t("services_content"),
       image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800",
-      gradient: "linear-gradient(90deg, hsla(24, 100%, 83%, 1) 0%, hsla(341, 91%, 68%, 1) 100%)"
+      gradient: "linear-gradient(90deg, rgba(255,200,169,0.3) 0%, rgba(236,106,140,0.3) 100%)"
     },
     {
       id: "skills",
@@ -43,7 +43,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       icon: <BarChart2 className="w-8 h-8" />,
       content: t("skills_content"),
       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800",
-      gradient: "linear-gradient(102.3deg, rgba(147,39,143,1) 5.9%, rgba(234,172,232,1) 64%)"
+      gradient: "linear-gradient(102.3deg, rgba(147,39,143,0.3) 5.9%, rgba(234,172,232,0.3) 64%)"
     },
     {
       id: "projects",
@@ -51,7 +51,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       icon: <Briefcase className="w-8 h-8" />,
       content: t("projects_content"),
       image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800",
-      gradient: "linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)"
+      gradient: "linear-gradient(90deg, rgba(157,178,217,0.3) 0%, rgba(24,54,126,0.3) 100%)"
     },
     {
       id: "testimonials",
@@ -59,7 +59,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       icon: <MessageSquare className="w-8 h-8" />,
       content: t("testimonials_content"),
       image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800",
-      gradient: "linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)"
+      gradient: "linear-gradient(90deg, rgba(136,219,159,0.3) 0%, rgba(229,236,121,0.3) 100%)"
     },
     {
       id: "contact",
@@ -67,7 +67,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       icon: <Mail className="w-8 h-8" />,
       content: t("contact_content"),
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800",
-      gradient: "linear-gradient(90deg, hsla(29, 92%, 70%, 1) 0%, hsla(0, 87%, 73%, 1) 100%)"
+      gradient: "linear-gradient(90deg, rgba(252,180,103,0.3) 0%, rgba(247,129,129,0.3) 100%)"
     }
   ];
 
@@ -130,7 +130,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
             background: section.gradient,
           }}
         >
-          <div className="absolute inset-0 bg-black/40 transition-opacity group-hover:opacity-30" />
+          <div className="absolute inset-0 bg-black/60 transition-opacity group-hover:opacity-30" />
           <img 
             src={section.image} 
             alt={section.title} 
