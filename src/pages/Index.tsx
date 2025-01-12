@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, Twitter, Facebook, MessageCircle, Linkedin, Instagram, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { translations } from "@/utils/translations";
-import * as THREE from "three";
 
 type Language = "EN" | "UA" | "NO";
 
@@ -18,118 +17,11 @@ const Index = () => {
   const [time, setTime] = useState(new Date());
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [currentLanguage, setCurrentLanguage] = useState<Language>("EN");
-  const avatarRef = useRef<HTMLDivElement>(null);
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const [webGLError, setWebGLError] = useState(false);
 
   // Update time every second
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
-  }, []);
-
-  // Initialize Three.js scene
-  useEffect(() => {
-    if (!avatarRef.current) return;
-
-    try {
-      // Scene setup
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        75,
-        avatarRef.current.clientWidth / avatarRef.current.clientHeight,
-        0.1,
-        1000
-      );
-
-      const renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true,
-        powerPreference: "default",
-      });
-
-      renderer.setSize(avatarRef.current.clientWidth, avatarRef.current.clientHeight);
-      avatarRef.current.appendChild(renderer.domElement);
-
-      // Create a head-like shape
-      const headGeometry = new THREE.SphereGeometry(1, 32, 32);
-      const headMaterial = new THREE.MeshPhongMaterial({
-        color: 0xf4d03f,
-        shininess: 100,
-      });
-      const head = new THREE.Mesh(headGeometry, headMaterial);
-      scene.add(head);
-
-      // Add eyes
-      const eyeGeometry = new THREE.SphereGeometry(0.2, 32, 32);
-      const eyeMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
-      
-      const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-      leftEye.position.set(-0.3, 0.2, 0.8);
-      head.add(leftEye);
-
-      const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-      rightEye.position.set(0.3, 0.2, 0.8);
-      head.add(rightEye);
-
-      // Add lights
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-      directionalLight.position.set(0, 1, 2);
-      scene.add(directionalLight);
-      
-      const ambientLight = new THREE.AmbientLight(0x404040);
-      scene.add(ambientLight);
-
-      camera.position.z = 3;
-
-      // Mouse movement handler
-      const handleMouseMove = (event: MouseEvent) => {
-        const rect = avatarRef.current?.getBoundingClientRect();
-        if (!rect) return;
-
-        const mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        const mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-        // Rotate head to follow mouse
-        head.rotation.y = mouseX * 0.5;
-        head.rotation.x = mouseY * 0.5;
-      };
-
-      window.addEventListener('mousemove', handleMouseMove);
-
-      // Animation loop
-      const animate = () => {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-      };
-      animate();
-
-      // Handle window resize
-      const handleResize = () => {
-        if (!avatarRef.current) return;
-        
-        camera.aspect = avatarRef.current.clientWidth / avatarRef.current.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(avatarRef.current.clientWidth, avatarRef.current.clientHeight);
-      };
-
-      window.addEventListener('resize', handleResize);
-
-      // Cleanup
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('resize', handleResize);
-        renderer.dispose();
-        if (avatarRef.current?.contains(renderer.domElement)) {
-          avatarRef.current.removeChild(renderer.domElement);
-        }
-      };
-    } catch (error) {
-      console.error('Three.js initialization failed:', error);
-      setWebGLError(true);
-    }
   }, []);
 
   const sections: Section[] = [
@@ -207,58 +99,47 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#121212] text-white">
-      {/* 3D Avatar - Only visible on desktop */}
-      <div 
-        ref={avatarRef} 
-        className="fixed left-0 top-0 bottom-0 w-1/4 h-screen hidden lg:block"
-        style={{ perspective: '1000px' }}
-      >
-        {webGLError && (
-          <div className="flex items-center justify-center h-full text-gray-400">
-            3D avatar unavailable
-          </div>
-        )}
-      </div>
-
       {/* Header */}
-      <header className="fixed top-0 w-full bg-[#1a1a1a] p-4 z-50">
-        <div className="flex flex-col items-center mb-4">
-          <h1 className="text-2xl font-bold">Vitalii Berbeha</h1>
-          <h2 className="text-xl">{translations[currentLanguage].title}</h2>
-          <p className="text-gray-400 mt-2 max-w-2xl text-center">
-            {translations[currentLanguage].subtitle}
-          </p>
-        </div>
-        <div className="flex justify-end space-x-4">
-          <button
-            onClick={() => setCurrentLanguage("NO")}
-            className={`px-3 py-1 rounded ${
-              currentLanguage === "NO" ? "bg-blue-600" : "bg-gray-700"
-            }`}
-          >
-            NO
-          </button>
-          <button
-            onClick={() => setCurrentLanguage("EN")}
-            className={`px-3 py-1 rounded ${
-              currentLanguage === "EN" ? "bg-blue-600" : "bg-gray-700"
-            }`}
-          >
-            EN
-          </button>
-          <button
-            onClick={() => setCurrentLanguage("UA")}
-            className={`px-3 py-1 rounded ${
-              currentLanguage === "UA" ? "bg-blue-600" : "bg-gray-700"
-            }`}
-          >
-            UA
-          </button>
+      <header className="fixed top-0 w-full bg-[#1a1a1a] z-50">
+        <div className="container mx-auto py-6">
+          <div className="flex flex-col items-center mb-4">
+            <h1 className="text-3xl font-bold mb-2">Vitalii Berbeha</h1>
+            <h2 className="text-xl mb-3">{translations[currentLanguage].title}</h2>
+            <p className="text-gray-400 max-w-2xl text-center">
+              {translations[currentLanguage].subtitle}
+            </p>
+          </div>
+          <div className="flex justify-end space-x-4 mt-4">
+            <button
+              onClick={() => setCurrentLanguage("NO")}
+              className={`px-3 py-1 rounded ${
+                currentLanguage === "NO" ? "bg-blue-600" : "bg-gray-700"
+              }`}
+            >
+              NO
+            </button>
+            <button
+              onClick={() => setCurrentLanguage("EN")}
+              className={`px-3 py-1 rounded ${
+                currentLanguage === "EN" ? "bg-blue-600" : "bg-gray-700"
+              }`}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setCurrentLanguage("UA")}
+              className={`px-3 py-1 rounded ${
+                currentLanguage === "UA" ? "bg-blue-600" : "bg-gray-700"
+              }`}
+            >
+              UA
+            </button>
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow mt-40 mb-16 p-8">
+      <main className="flex-grow mt-48 mb-16 p-8">
         <div className="bento-grid">
           {sections.map((section) => (
             <div
