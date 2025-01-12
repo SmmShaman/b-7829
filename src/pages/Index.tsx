@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, Twitter, Facebook, Linkedin, Instagram, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, Twitter, Facebook, Telegram, Linkedin, Instagram, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { translations } from "@/utils/translations";
 
@@ -10,17 +10,40 @@ interface Section {
   title: string;
   icon: React.ReactNode;
   content: string;
+  image: string;
 }
 
 const Index = () => {
   const [time, setTime] = useState(new Date());
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [currentLanguage, setCurrentLanguage] = useState<Language>("EN");
+  const avatarRef = useRef<HTMLDivElement>(null);
 
   // Update time every second using useEffect
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
+  }, []);
+
+  // Handle cursor tracking for 3D avatar
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (avatarRef.current) {
+        const { clientX, clientY } = e;
+        const { left, top, width, height } = avatarRef.current.getBoundingClientRect();
+        
+        const centerX = left + width / 2;
+        const centerY = top + height / 2;
+        
+        const angleX = (clientY - centerY) / 20;
+        const angleY = (clientX - centerX) / 20;
+        
+        avatarRef.current.style.transform = `rotateX(${-angleX}deg) rotateY(${angleY}deg)`;
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   const sections: Section[] = [
@@ -29,48 +52,86 @@ const Index = () => {
       title: translations[currentLanguage].about,
       icon: <BookOpen className="w-8 h-8" />,
       content: translations[currentLanguage].aboutContent,
+      image: "/images/about-bg.jpg"
     },
     {
       id: "projects",
       title: translations[currentLanguage].projects,
       icon: <Briefcase className="w-8 h-8" />,
       content: translations[currentLanguage].projectsContent,
+      image: "/images/projects-bg.jpg"
     },
     {
       id: "services",
       title: translations[currentLanguage].services,
       icon: <Wrench className="w-8 h-8" />,
       content: translations[currentLanguage].servicesContent,
+      image: "/images/services-bg.jpg"
     },
     {
       id: "skills",
       title: translations[currentLanguage].skills,
       icon: <BarChart2 className="w-8 h-8" />,
       content: translations[currentLanguage].skillsContent,
+      image: "/images/skills-bg.jpg"
     },
     {
       id: "testimonials",
       title: translations[currentLanguage].testimonials,
       icon: <MessageSquare className="w-8 h-8" />,
       content: translations[currentLanguage].testimonialsContent,
+      image: "/images/testimonials-bg.jpg"
     },
     {
       id: "contact",
       title: translations[currentLanguage].contact,
       icon: <Mail className="w-8 h-8" />,
-      content: translations[currentLanguage].contactContent,
+      content: `
+        <form action="mailto:info@vitalii.no" method="post" enctype="text/plain">
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">Name</label>
+              <input type="text" name="name" class="w-full p-2 rounded bg-gray-800 border border-gray-700" required />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Email</label>
+              <input type="email" name="email" class="w-full p-2 rounded bg-gray-800 border border-gray-700" required />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Message</label>
+              <textarea name="message" rows="4" class="w-full p-2 rounded bg-gray-800 border border-gray-700" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors">
+              Send Message
+            </button>
+          </div>
+        </form>
+      `,
+      image: "/images/contact-bg.jpg"
     },
   ];
 
   const socialLinks = [
-    { icon: <Twitter className="w-6 h-6" />, url: "https://twitter.com/yourusername" },
-    { icon: <Facebook className="w-6 h-6" />, url: "https://facebook.com/yourusername" },
-    { icon: <Instagram className="w-6 h-6" />, url: "https://instagram.com/yourusername" },
-    { icon: <Linkedin className="w-6 h-6" />, url: "https://linkedin.com/in/yourusername" },
+    { icon: <Twitter className="w-6 h-6" />, url: "https://twitter.com" },
+    { icon: <Facebook className="w-6 h-6" />, url: "https://facebook.com" },
+    { icon: <Telegram className="w-6 h-6" />, url: "https://t.me" },
+    { icon: <Instagram className="w-6 h-6" />, url: "https://instagram.com" },
+    { icon: <Linkedin className="w-6 h-6" />, url: "https://linkedin.com" },
   ];
 
   return (
     <div className="min-h-screen flex flex-col bg-[#121212] text-white">
+      {/* 3D Avatar */}
+      <div ref={avatarRef} className="avatar-container perspective-1000">
+        <model-viewer
+          src="/3d-avatar.glb"
+          auto-rotate
+          camera-controls
+          disable-zoom
+          style={{ width: '100%', height: '100%' }}
+        ></model-viewer>
+      </div>
+
       {/* Header */}
       <header className="fixed top-0 w-full bg-[#1a1a1a] p-4 z-50">
         <div className="flex flex-col items-center mb-4">
@@ -117,9 +178,10 @@ const Index = () => {
               className="bento-card group cursor-pointer"
               onClick={() => setOpenSection(section.id)}
             >
-              <div className="flex flex-col items-center justify-center h-full space-y-4">
+              <img src={section.image} alt={section.title} className="bento-card-image" />
+              <div className="bento-card-content">
                 {section.icon}
-                <h2 className="text-xl font-semibold">{section.title}</h2>
+                <h2 className="text-xl font-semibold mt-4">{section.title}</h2>
               </div>
             </div>
           ))}
@@ -149,7 +211,7 @@ const Index = () => {
       {/* Section Dialog */}
       {openSection && (
         <Dialog open={!!openSection} onOpenChange={() => setOpenSection(null)}>
-          <DialogContent className="fixed inset-y-[64px] max-w-full h-[calc(100vh-128px)] m-0 rounded-none">
+          <DialogContent className="w-full max-w-4xl mx-auto">
             <DialogHeader>
               <DialogTitle className="flex justify-between items-center">
                 <span>{sections.find((s) => s.id === openSection)?.title}</span>
@@ -161,9 +223,9 @@ const Index = () => {
                 </button>
               </DialogTitle>
             </DialogHeader>
-            <div className="mt-4">
-              {sections.find((s) => s.id === openSection)?.content}
-            </div>
+            <div className="mt-4" dangerouslySetInnerHTML={{ 
+              __html: sections.find((s) => s.id === openSection)?.content || '' 
+            }} />
           </DialogContent>
         </Dialog>
       )}
