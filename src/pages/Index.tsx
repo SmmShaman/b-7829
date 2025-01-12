@@ -92,28 +92,28 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white">
       {/* Header */}
-      <header className="fixed top-0 w-full backdrop-blur-lg bg-black/30 z-50">
-        <div className="w-full px-8 h-[20vh] flex items-center justify-between">
+      <header className="fixed top-0 w-full glass-effect z-50">
+        <div className="w-full px-4 md:px-8 py-4 md:h-[20vh] flex flex-col md:flex-row items-center justify-between">
           <div className="flex-1 text-center">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-transparent bg-clip-text">
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-transparent bg-clip-text animate-fade-in">
               Vitalii Berbeha
             </h1>
-            <h2 className="text-2xl mt-2 bg-gradient-to-r from-[#0EA5E9] to-[#F97316] text-transparent bg-clip-text">
+            <h2 className="text-xl md:text-2xl mt-2 bg-gradient-to-r from-[#0EA5E9] to-[#F97316] text-transparent bg-clip-text animate-slide-up">
               {t("title")}
             </h2>
-            <p className="text-gray-300 max-w-2xl mx-auto mt-2 text-sm">
+            <p className="text-gray-300 max-w-2xl mx-auto mt-2 text-sm md:text-base animate-slide-up">
               {t("subtitle")}
             </p>
           </div>
-          <div className="flex gap-2 absolute top-4 right-8">
+          <div className="flex gap-2 mt-4 md:mt-0 md:absolute md:top-4 md:right-8">
             {["NO", "EN", "UA"].map((lang) => (
               <button
                 key={lang}
                 onClick={() => setCurrentLanguage(lang as Language)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-3 md:px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
                   currentLanguage === lang
                     ? "bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-white"
-                    : "bg-black/20 hover:bg-black/40 text-gray-300"
+                    : "glass-effect hover:bg-black/40 text-gray-300"
                 }`}
               >
                 {lang}
@@ -124,7 +124,7 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow mt-[20vh] mb-16 p-8">
+      <main className="flex-grow mt-[32vh] md:mt-[20vh] mb-16 p-4 md:p-8">
         <div className="bento-grid">
           {sections.map((section) => (
             <div
@@ -133,10 +133,9 @@ const Index = () => {
               onClick={() => setOpenSection(section.id)}
               style={{
                 background: section.gradient,
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
               }}
             >
-              <div className="absolute inset-0 bg-black/40 rounded-2xl transition-opacity group-hover:opacity-30" />
+              <div className="absolute inset-0 bg-black/40 rounded-[2rem] transition-opacity group-hover:opacity-30" />
               <img 
                 src={section.image} 
                 alt={section.title} 
@@ -156,9 +155,9 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="fixed bottom-0 w-full backdrop-blur-lg bg-black/30 p-4">
-        <div className="flex justify-center items-center space-x-6">
-          <p className="text-gray-300">{time.toLocaleTimeString()}</p>
+      <footer className="fixed bottom-0 w-full glass-effect py-4">
+        <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-6">
+          <p className="text-gray-300 text-sm md:text-base">{time.toLocaleTimeString()}</p>
           <div className="flex space-x-4">
             {socialLinks.map((link, index) => (
               <a
@@ -179,14 +178,16 @@ const Index = () => {
       {openSection && (
         <Dialog open={!!openSection} onOpenChange={() => setOpenSection(null)}>
           <DialogContent 
-            className="w-full max-w-4xl mx-auto"
+            className="w-full max-w-4xl mx-auto glass-effect"
             style={{
               background: sections.find(s => s.id === openSection)?.gradient,
             }}
           >
             <DialogHeader>
               <DialogTitle className="flex justify-between items-center text-white">
-                <span>{sections.find((s) => s.id === openSection)?.title}</span>
+                <span className="text-xl md:text-2xl font-bold">
+                  {sections.find((s) => s.id === openSection)?.title}
+                </span>
                 <button
                   onClick={() => setOpenSection(null)}
                   className="hover:text-gray-400 transition-colors"
@@ -195,12 +196,10 @@ const Index = () => {
                 </button>
               </DialogTitle>
             </DialogHeader>
-            <div 
-              className="mt-4 text-white relative z-10"
-            >
+            <div className="mt-4 text-white relative z-10 text-sm md:text-base">
               {sections.find((s) => s.id === openSection)?.content}
             </div>
-            <div className="absolute inset-0 bg-black/20 rounded-lg z-0" />
+            <div className="absolute inset-0 bg-black/20 rounded-[2rem] z-0" />
           </DialogContent>
         </Dialog>
       )}

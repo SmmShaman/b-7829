@@ -12,7 +12,7 @@
     --border: 0 0% 14.9%;
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
-    --radius: 1rem;
+    --radius: 1.5rem;
   }
 
   * {
@@ -22,6 +22,11 @@
   body {
     @apply bg-[#121212] text-foreground font-['Inter'] m-0 p-0 overflow-hidden;
   }
+}
+
+.glass-effect {
+  @apply backdrop-blur-lg bg-black/30;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .bento-grid {
@@ -38,18 +43,20 @@
 }
 
 .bento-card {
-  @apply p-8 rounded-2xl transition-all duration-500 relative overflow-hidden;
+  @apply p-8 rounded-[2rem] transition-all duration-500 relative overflow-hidden backdrop-blur-sm;
   min-height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   transform: translateY(0);
-  transition: transform 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .bento-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .bento-card-image {
@@ -60,7 +67,7 @@
   height: 100%;
   object-fit: cover;
   opacity: 0.1;
-  transition: opacity 0.3s, transform 0.3s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 0;
 }
 
@@ -73,28 +80,61 @@
   position: relative;
   z-index: 1;
   text-align: center;
-}
-
-@media (max-width: 1024px) {
-  .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    padding: 1rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .bento-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .bento-card {
-    min-height: 150px;
-  }
+  @apply animate-slide-up;
 }
 
 [data-radix-dialog-content] {
   animation: none !important;
   max-height: calc(100vh - 16rem) !important;
   margin: 8rem auto !important;
+  @apply rounded-[2rem] !important;
+}
+
+@media (max-width: 1280px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
+    height: calc(100vh - 14rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    height: calc(100vh - 12rem);
+  }
+  
+  .bento-card {
+    min-height: 150px;
+    padding: 1.5rem;
+  }
+
+  [data-radix-dialog-content] {
+    margin: 4rem auto !important;
+    max-height: calc(100vh - 8rem) !important;
+  }
+}
+
+@media (max-height: 700px) {
+  .bento-grid {
+    height: calc(100vh - 10rem);
+  }
+
+  .bento-card {
+    min-height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .bento-card {
+    min-height: 130px;
+    padding: 1rem;
+  }
 }
