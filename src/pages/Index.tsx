@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, Twitter, Facebook, Telegram, Linkedin, Instagram, X } from "lucide-react";
+import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, Twitter, Facebook, MessageCircle, Linkedin, Instagram } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { translations } from "@/utils/translations";
+import * as THREE from "three";
 
 type Language = "EN" | "UA" | "NO";
 
@@ -18,17 +19,65 @@ const Index = () => {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [currentLanguage, setCurrentLanguage] = useState<Language>("EN");
   const avatarRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
-  // Update time every second using useEffect
+  // Update time every second
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
+  // Initialize Three.js scene
+  useEffect(() => {
+    if (!avatarRef.current) return;
+
+    // Scene setup
+    sceneRef.current = new THREE.Scene();
+    cameraRef.current = new THREE.PerspectiveCamera(75, avatarRef.current.clientWidth / avatarRef.current.clientHeight, 0.1, 1000);
+    rendererRef.current = new THREE.WebGLRenderer({ antialias: true });
+    
+    rendererRef.current.setSize(avatarRef.current.clientWidth, avatarRef.current.clientHeight);
+    avatarRef.current.appendChild(rendererRef.current.domElement);
+
+    // Add a simple sphere for testing
+    const geometry = new THREE.SphereGeometry(1, 32, 32);
+    const material = new THREE.MeshPhongMaterial({ color: 0x808080 });
+    const sphere = new THREE.Mesh(geometry, material);
+    sceneRef.current.add(sphere);
+
+    // Add lights
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(0, 1, 2);
+    sceneRef.current.add(light);
+    
+    const ambientLight = new THREE.AmbientLight(0x404040);
+    sceneRef.current.add(ambientLight);
+
+    cameraRef.current.position.z = 5;
+
+    // Animation loop
+    const animate = () => {
+      requestAnimationFrame(animate);
+      if (rendererRef.current && sceneRef.current && cameraRef.current) {
+        rendererRef.current.render(sceneRef.current, cameraRef.current);
+      }
+    };
+    animate();
+
+    // Cleanup
+    return () => {
+      if (rendererRef.current && avatarRef.current) {
+        avatarRef.current.removeChild(rendererRef.current.domElement);
+      }
+    };
+  }, []);
+
   // Handle cursor tracking for 3D avatar
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (avatarRef.current) {
+      if (avatarRef.current && sceneRef.current && cameraRef.current) {
         const { clientX, clientY } = e;
         const { left, top, width, height } = avatarRef.current.getBoundingClientRect();
         
@@ -38,7 +87,11 @@ const Index = () => {
         const angleX = (clientY - centerY) / 20;
         const angleY = (clientX - centerX) / 20;
         
-        avatarRef.current.style.transform = `rotateX(${-angleX}deg) rotateY(${angleY}deg)`;
+        // Update camera or model rotation based on mouse position
+        if (sceneRef.current.children[0]) {
+          sceneRef.current.children[0].rotation.x = -angleX * 0.1;
+          sceneRef.current.children[0].rotation.y = angleY * 0.1;
+        }
       }
     };
 
@@ -114,7 +167,7 @@ const Index = () => {
   const socialLinks = [
     { icon: <Twitter className="w-6 h-6" />, url: "https://twitter.com" },
     { icon: <Facebook className="w-6 h-6" />, url: "https://facebook.com" },
-    { icon: <Telegram className="w-6 h-6" />, url: "https://t.me" },
+    { icon: <MessageCircle className="w-6 h-6" />, url: "https://t.me" }, // Using MessageCircle instead of Telegram
     { icon: <Instagram className="w-6 h-6" />, url: "https://instagram.com" },
     { icon: <Linkedin className="w-6 h-6" />, url: "https://linkedin.com" },
   ];
@@ -122,17 +175,12 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#121212] text-white">
       {/* 3D Avatar */}
-      <div ref={avatarRef} className="avatar-container perspective-1000">
-        <model-viewer
-          src="/3d-avatar.glb"
-          auto-rotate
-          camera-controls
-          disable-zoom
-          style={{ width: '100%', height: '100%' }}
-        ></model-viewer>
-      </div>
+      <div 
+        ref={avatarRef} 
+        className="fixed left-0 top-0 bottom-0 w-1/4 h-screen"
+        style={{ perspective: '1000px' }}
+      />
 
-      {/* Header */}
       <header className="fixed top-0 w-full bg-[#1a1a1a] p-4 z-50">
         <div className="flex flex-col items-center mb-4">
           <h1 className="text-2xl font-bold">Vitalii Berbeha</h1>
