@@ -97,12 +97,12 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       clickedCard.style.transform = `translate(${pos.x - startPos.x}px, ${pos.y - startPos.y}px)`;
       cards[orderIndex].classList.add('eaten');
       
-      await new Promise(resolve => setTimeout(resolve, 300)); // Increased delay for smoother animation
+      await new Promise(resolve => setTimeout(resolve, 400)); // Slower animation
     }
 
     // Move to final position and expand
     clickedCard.style.transform = 'translate(0, 0)';
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise(resolve => setTimeout(resolve, 400));
     clickedCard.classList.add('snake-expanded');
 
     // Trigger the section change
@@ -127,7 +127,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
         <div
           key={section.id}
           ref={el => el && cardRefs.current.set(section.id, el)}
-          className="bento-card"
+          className="bento-card group"
           onClick={() => handleCardClick(section.id, index)}
           style={{
             background: section.gradient,
@@ -140,10 +140,10 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
             className="bento-card-image"
           />
           <div className="bento-card-content">
-            <div className="text-white">
+            <div className="text-white mb-2">
               {section.icon}
             </div>
-            <h2 className="text-xl font-bold mt-4 text-white drop-shadow-lg">
+            <h2 className="text-2xl font-bold text-white drop-shadow-lg">
               {section.title}
             </h2>
           </div>

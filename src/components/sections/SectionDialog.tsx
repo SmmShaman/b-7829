@@ -11,11 +11,10 @@ const SectionDialog = ({ openSection }: SectionDialogProps) => {
   if (!openSection) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="w-full h-full p-8 overflow-auto">
-        <div className="text-white">
-          <h1 className="text-3xl font-bold mb-6">{t(`${openSection}_title`)}</h1>
-          <div className="prose prose-invert max-w-none">
+    <div className="fixed inset-0 z-50 flex items-start justify-center p-8 overflow-y-auto">
+      <div className="w-full max-w-4xl">
+        <div className="prose prose-invert max-w-none">
+          <div className="text-lg leading-relaxed">
             {t(`${openSection}_content`)}
           </div>
         </div>
