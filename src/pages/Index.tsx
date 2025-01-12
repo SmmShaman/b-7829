@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, Twitter, Facebook, MessageCircle, Linkedin, Instagram, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { translations } from "@/utils/translations";
-
-type Language = "EN" | "UA" | "NO";
+import { useTranslations, Language } from "@/hooks/useTranslations";
 
 interface Section {
   id: string;
@@ -17,7 +15,7 @@ interface Section {
 const Index = () => {
   const [time, setTime] = useState(new Date());
   const [openSection, setOpenSection] = useState<string | null>(null);
-  const [currentLanguage, setCurrentLanguage] = useState<Language>("EN");
+  const { t, currentLanguage, setCurrentLanguage, isLoading } = useTranslations();
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -27,69 +25,49 @@ const Index = () => {
   const sections: Section[] = [
     {
       id: "about",
-      title: translations[currentLanguage].about,
+      title: t("about"),
       icon: <BookOpen className="w-8 h-8" />,
-      content: translations[currentLanguage].aboutContent,
+      content: t("about_content"),
       image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800",
       gradient: "linear-gradient(225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%)"
     },
     {
       id: "projects",
-      title: translations[currentLanguage].projects,
+      title: t("projects"),
       icon: <Briefcase className="w-8 h-8" />,
-      content: translations[currentLanguage].projectsContent,
+      content: "",
       image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800",
       gradient: "linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)"
     },
     {
       id: "services",
-      title: translations[currentLanguage].services,
+      title: t("services"),
       icon: <Wrench className="w-8 h-8" />,
-      content: translations[currentLanguage].servicesContent,
+      content: t("services_content"),
       image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800",
       gradient: "linear-gradient(90deg, hsla(24, 100%, 83%, 1) 0%, hsla(341, 91%, 68%, 1) 100%)"
     },
     {
       id: "skills",
-      title: translations[currentLanguage].skills,
+      title: t("skills"),
       icon: <BarChart2 className="w-8 h-8" />,
-      content: translations[currentLanguage].skillsContent,
+      content: t("skills_content"),
       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800",
       gradient: "linear-gradient(102.3deg, rgba(147,39,143,1) 5.9%, rgba(234,172,232,1) 64%)"
     },
     {
       id: "testimonials",
-      title: translations[currentLanguage].testimonials,
+      title: t("testimonials"),
       icon: <MessageSquare className="w-8 h-8" />,
-      content: translations[currentLanguage].testimonialsContent,
+      content: "",
       image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800",
       gradient: "linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)"
     },
     {
       id: "contact",
-      title: translations[currentLanguage].contact,
+      title: t("contact"),
       icon: <Mail className="w-8 h-8" />,
-      content: `
-        <form action="mailto:info@vitalii.no" method="post" enctype="text/plain">
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium mb-1">Name</label>
-              <input type="text" name="name" class="w-full p-2 rounded bg-gray-800 border border-gray-700" required />
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Email</label>
-              <input type="email" name="email" class="w-full p-2 rounded bg-gray-800 border border-gray-700" required />
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Message</label>
-              <textarea name="message" rows="4" class="w-full p-2 rounded bg-gray-800 border border-gray-700" required></textarea>
-            </div>
-            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors">
-              Send Message
-            </button>
-          </div>
-        </form>
-      `,
+      content: t("contact_content"),
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800",
       gradient: "linear-gradient(90deg, hsla(29, 92%, 70%, 1) 0%, hsla(0, 87%, 73%, 1) 100%)"
     },
@@ -103,6 +81,14 @@ const Index = () => {
     { icon: <Linkedin className="w-6 h-6" />, url: "https://linkedin.com" },
   ];
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white">
       {/* Header */}
@@ -113,10 +99,10 @@ const Index = () => {
               Vitalii Berbeha
             </h1>
             <h2 className="text-2xl mt-2 bg-gradient-to-r from-[#0EA5E9] to-[#F97316] text-transparent bg-clip-text">
-              {translations[currentLanguage].title}
+              {t("title")}
             </h2>
             <p className="text-gray-300 max-w-2xl mx-auto mt-2 text-sm">
-              {translations[currentLanguage].subtitle}
+              {t("subtitle")}
             </p>
           </div>
           <div className="flex gap-2 absolute top-4 right-8">
@@ -140,7 +126,7 @@ const Index = () => {
       {/* Main Content */}
       <main className="flex-grow mt-[20vh] mb-16 p-8">
         <div className="bento-grid">
-          {sections.map((section, index) => (
+          {sections.map((section) => (
             <div
               key={section.id}
               className="bento-card group cursor-pointer"
@@ -210,11 +196,10 @@ const Index = () => {
               </DialogTitle>
             </DialogHeader>
             <div 
-              className="mt-4 text-white relative z-10" 
-              dangerouslySetInnerHTML={{ 
-                __html: sections.find((s) => s.id === openSection)?.content || '' 
-              }} 
-            />
+              className="mt-4 text-white relative z-10"
+            >
+              {sections.find((s) => s.id === openSection)?.content}
+            </div>
             <div className="absolute inset-0 bg-black/20 rounded-lg z-0" />
           </DialogContent>
         </Dialog>
