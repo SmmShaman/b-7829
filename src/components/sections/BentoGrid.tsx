@@ -1,4 +1,4 @@
-import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, X } from "lucide-react";
+import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail } from "lucide-react";
 import { useTranslations } from "@/hooks/useTranslations";
 import { useEffect, useRef } from "react";
 
@@ -103,12 +103,9 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     // Move to center and expand
     clickedCard.style.transform = 'translate(0, 0)';
     await new Promise(resolve => setTimeout(resolve, 400));
-    clickedCard.classList.add('snake-expanded');
 
-    // Trigger the section change
-    setTimeout(() => {
-      onSectionClick(sectionId);
-    }, 800);
+    // Trigger the section change after animation completes
+    onSectionClick(sectionId);
   };
 
   useEffect(() => {
@@ -122,46 +119,30 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="bento-grid">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto px-4">
       {sections.map((section, index) => (
         <div
           key={section.id}
           ref={el => el && cardRefs.current.set(section.id, el)}
-          className="bento-card group"
+          className="relative overflow-hidden rounded-[2rem] aspect-square cursor-pointer transform transition-transform duration-300 hover:scale-[1.02]"
           onClick={() => handleCardClick(section.id, index)}
           style={{
             background: section.gradient,
           }}
         >
-          <div className="absolute inset-0 bg-black/40 rounded-[2rem] transition-opacity group-hover:opacity-30" />
+          <div className="absolute inset-0 bg-black/40 transition-opacity group-hover:opacity-30" />
           <img 
             src={section.image} 
             alt={section.title} 
-            className="bento-card-image"
+            className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="bento-card-content">
-            <div className="text-white mb-2">
+          <div className="relative h-full p-6 flex flex-col justify-end text-white">
+            <div className="mb-2">
               {section.icon}
             </div>
-            <h2 className="text-2xl font-bold text-white drop-shadow-lg">
+            <h2 className="text-2xl font-bold">
               {section.title}
             </h2>
-            {expandingCard === section.id && (
-              <div className="mt-8 text-white text-left">
-                <button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onSectionClick(null);
-                  }}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-                <div className="prose prose-invert max-w-none">
-                  {section.content}
-                </div>
-              </div>
-            )}
           </div>
         </div>
       ))}
