@@ -101,7 +101,7 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-[#121212] text-white">
       {/* Header */}
       <header className="fixed top-0 w-full bg-[#1a1a1a] z-50">
-        <div className="container mx-auto py-6">
+        <div className="w-full px-8 py-6">
           <div className="flex flex-col items-center mb-4">
             <h1 className="text-3xl font-bold mb-2">Vitalii Berbeha</h1>
             <h2 className="text-xl mb-3">{translations[currentLanguage].title}</h2>
