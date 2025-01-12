@@ -78,26 +78,33 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     // Start snake animation
     clickedCard.classList.add('snake-animation');
     
-    // Calculate positions for snake movement
+    // Calculate positions for clockwise snake movement
     const cards = Array.from(cardRefs.current.values());
     const positions = cards.map(card => {
       const rect = card.getBoundingClientRect();
       return { x: rect.left, y: rect.top };
     });
 
-    // Animate through each card position
-    for (let i = 0; i < positions.length; i++) {
-      if (i === index) continue;
+    // Define clockwise order based on grid layout (2x3 grid)
+    const clockwiseOrder = [0, 1, 2, 5, 4, 3];
+    
+    // Animate through each card position in clockwise order
+    for (const orderIndex of clockwiseOrder) {
+      if (orderIndex === index) continue;
       
-      const pos = positions[i];
-      clickedCard.style.transform = `translate(${pos.x - positions[index].x}px, ${pos.y - positions[index].y}px)`;
-      cards[i].classList.add('eaten');
+      const pos = positions[orderIndex];
+      const startPos = positions[index];
+      clickedCard.style.transform = `translate(${pos.x - startPos.x}px, ${pos.y - startPos.y}px)`;
+      cards[orderIndex].classList.add('eaten');
       
       await new Promise(resolve => setTimeout(resolve, 200));
     }
 
-    // Final expansion animation
+    // Move to top-left corner
+    clickedCard.style.transform = 'translate(0, 0)';
     await new Promise(resolve => setTimeout(resolve, 300));
+
+    // Final diagonal expansion animation
     clickedCard.classList.add('snake-expanded');
 
     // Trigger the section change
@@ -141,6 +148,9 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
             <h2 className="text-xl font-bold mt-4 text-white drop-shadow-lg">
               {section.title}
             </h2>
+            <p className="mt-2 text-sm text-white/90 line-clamp-2">
+              {section.content}
+            </p>
           </div>
         </div>
       ))}
