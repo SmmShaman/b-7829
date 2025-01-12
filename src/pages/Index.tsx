@@ -1,91 +1,153 @@
-import { useState, useEffect } from "react";
-import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { useState } from "react";
+import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, X } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
+interface Section {
+  id: string;
+  title: string;
+  icon: React.ReactNode;
+  content: React.ReactNode;
+}
 
 const Index = () => {
   const [time, setTime] = useState(new Date());
+  const [openSection, setOpenSection] = useState<string | null>(null);
+  const [currentLanguage, setCurrentLanguage] = useState<"EN" | "UA" | "NO">("EN");
 
-  useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const sections: Section[] = [
+    {
+      id: "about",
+      title: "About Me",
+      icon: <BookOpen className="w-8 h-8" />,
+      content: (
+        <div className="space-y-4">
+          <p className="text-lg">
+            A passionate developer with expertise in web development and user experience design.
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: "projects",
+      title: "Projects",
+      icon: <Briefcase className="w-8 h-8" />,
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-xl font-bold">Elvarika</h3>
+          <p className="text-lg">
+            An innovative project focused on delivering unique solutions.
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: "services",
+      title: "Services",
+      icon: <Wrench className="w-8 h-8" />,
+      content: (
+        <div className="space-y-4">
+          <ul className="space-y-2">
+            <li>Web Development</li>
+            <li>UI/UX Design</li>
+            <li>Technical Consulting</li>
+          </ul>
+        </div>
+      ),
+    },
+    {
+      id: "skills",
+      title: "Skills",
+      icon: <BarChart2 className="w-8 h-8" />,
+      content: (
+        <div className="space-y-4">
+          <ul className="space-y-2">
+            <li>React & TypeScript</li>
+            <li>UI/UX Design</li>
+            <li>Project Management</li>
+          </ul>
+        </div>
+      ),
+    },
+    {
+      id: "testimonials",
+      title: "Testimonials",
+      icon: <MessageSquare className="w-8 h-8" />,
+      content: (
+        <div className="space-y-4">
+          <blockquote className="border-l-2 pl-4 italic">
+            "Exceptional work and dedication to the project."
+          </blockquote>
+        </div>
+      ),
+    },
+    {
+      id: "contact",
+      title: "Contact",
+      icon: <Mail className="w-8 h-8" />,
+      content: (
+        <div className="space-y-4">
+          <p>Email: your.email@example.com</p>
+          <p>Phone: +1 234 567 890</p>
+        </div>
+      ),
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white">
-      <div className="bento-grid">
-        {/* Welcome Card */}
-        <div className="bento-card col-span-2">
-          <h2 className="text-sm text-gray-400 mb-2">welcome</h2>
-          <h1 className="text-4xl font-bold mb-4">
-            Hi, I'm <span className="text-blue-400">Your Name</span>
-          </h1>
-          <p className="text-gray-300 text-lg">
-            A software developer with a passion for creating beautiful and functional web experiences
-          </p>
+    <div className="min-h-screen flex flex-col bg-[#121212] text-white">
+      {/* Header */}
+      <header className="fixed top-0 w-full bg-[#1a1a1a] p-4 z-50">
+        <div className="flex justify-end space-x-4">
+          {["EN", "UA", "NO"].map((lang) => (
+            <button
+              key={lang}
+              onClick={() => setCurrentLanguage(lang as "EN" | "UA" | "NO")}
+              className={`px-3 py-1 rounded ${
+                currentLanguage === lang ? "bg-blue-600" : "bg-gray-700"
+              }`}
+            >
+              {lang}
+            </button>
+          ))}
         </div>
+      </header>
 
-        {/* About Card */}
-        <div className="bento-card row-span-2">
-          <h2 className="text-2xl font-bold mb-6">About me</h2>
-          <p className="text-gray-300 text-lg mb-6">
-            I specialize in building modern web applications using React, TypeScript, and other cutting-edge technologies.
-          </p>
-          <div className="space-y-4">
-            <p className="text-lg text-gray-400">My tools:</p>
-            <ul className="list-disc list-inside text-gray-300 text-lg space-y-2">
-              <li>React</li>
-              <li>TypeScript</li>
-              <li>Node.js</li>
-              <li>Tailwind CSS</li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Time Card */}
-        <div className="bento-card">
-          <h2 className="text-lg text-gray-400 mb-4">Current Time</h2>
-          <p className="text-3xl font-bold font-mono">
-            {time.toLocaleTimeString()}
-          </p>
-        </div>
-
-        {/* Contact Card */}
-        <div className="bento-card">
-          <h2 className="text-2xl font-bold mb-6">Let's Connect</h2>
-          <div className="flex space-x-6">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
-               className="p-3 rounded-full hover:bg-gray-800 transition-colors">
-              <Github className="w-8 h-8" />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-               className="p-3 rounded-full hover:bg-gray-800 transition-colors">
-              <Linkedin className="w-8 h-8" />
-            </a>
-            <a href="mailto:your@email.com"
-               className="p-3 rounded-full hover:bg-gray-800 transition-colors">
-              <Mail className="w-8 h-8" />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
-               className="p-3 rounded-full hover:bg-gray-800 transition-colors">
-              <Twitter className="w-8 h-8" />
-            </a>
-          </div>
-        </div>
-
-        {/* Projects Card */}
-        <div className="bento-card col-span-2">
-          <h2 className="text-2xl font-bold mb-6">Featured Projects</h2>
-          <div className="grid grid-cols-2 gap-6">
-            <div className="p-6 bg-card-hover rounded-lg">
-              <h3 className="text-xl font-bold mb-3">Project 1</h3>
-              <p className="text-gray-300">Description of your amazing project</p>
+      {/* Main Content */}
+      <main className="flex-grow mt-16 mb-16 p-8">
+        <div className="bento-grid">
+          {sections.map((section) => (
+            <div
+              key={section.id}
+              className="bento-card group cursor-pointer"
+              onClick={() => setOpenSection(section.id)}
+            >
+              <div className="flex flex-col items-center justify-center h-full space-y-4">
+                {section.icon}
+                <h2 className="text-xl font-semibold">{section.title}</h2>
+              </div>
             </div>
-            <div className="p-6 bg-card-hover rounded-lg">
-              <h3 className="text-xl font-bold mb-3">Project 2</h3>
-              <p className="text-gray-300">Description of another cool project</p>
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="fixed bottom-0 w-full bg-[#1a1a1a] p-4 text-center">
+        <p>{time.toLocaleTimeString()}</p>
+      </footer>
+
+      {/* Section Dialog */}
+      <Dialog open={!!openSection} onOpenChange={() => setOpenSection(null)}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>
+              {sections.find((s) => s.id === openSection)?.title}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="mt-4">
+            {sections.find((s) => s.id === openSection)?.content}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
