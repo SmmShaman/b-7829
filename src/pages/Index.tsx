@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail, Twitter, Facebook, Linkedin, Instagram, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { translations } from "@/utils/translations";
@@ -17,8 +17,8 @@ const Index = () => {
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [currentLanguage, setCurrentLanguage] = useState<Language>("EN");
 
-  // Update time every second
-  useState(() => {
+  // Update time every second using useEffect
+  useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
