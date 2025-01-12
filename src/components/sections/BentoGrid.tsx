@@ -1,4 +1,4 @@
-import { BookOpen, Briefcase, Wrench, BarChart2, MessageSquare, Mail } from "lucide-react";
+import { BookOpen, Briefcase, Wrench, BarChart2, X } from "lucide-react";
 import { useTranslations } from "@/hooks/useTranslations";
 import { useEffect, useRef } from "react";
 
@@ -30,14 +30,6 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       gradient: "linear-gradient(225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%)"
     },
     {
-      id: "projects",
-      title: t("projects"),
-      icon: <Briefcase className="w-8 h-8" />,
-      content: t("projects_content"),
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800",
-      gradient: "linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)"
-    },
-    {
       id: "services",
       title: t("services"),
       icon: <Wrench className="w-8 h-8" />,
@@ -54,21 +46,13 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       gradient: "linear-gradient(102.3deg, rgba(147,39,143,1) 5.9%, rgba(234,172,232,1) 64%)"
     },
     {
-      id: "testimonials",
-      title: t("testimonials"),
-      icon: <MessageSquare className="w-8 h-8" />,
-      content: t("testimonials_content"),
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800",
-      gradient: "linear-gradient(90deg, hsla(139, 70%, 75%, 1) 0%, hsla(63, 90%, 76%, 1) 100%)"
-    },
-    {
-      id: "contact",
-      title: t("contact"),
-      icon: <Mail className="w-8 h-8" />,
-      content: t("contact_content"),
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800",
-      gradient: "linear-gradient(90deg, hsla(29, 92%, 70%, 1) 0%, hsla(0, 87%, 73%, 1) 100%)"
-    },
+      id: "projects",
+      title: t("projects"),
+      icon: <Briefcase className="w-8 h-8" />,
+      content: t("projects_content"),
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800",
+      gradient: "linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)"
+    }
   ];
 
   const handleCardClick = async (sectionId: string, index: number) => {
@@ -86,7 +70,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     });
 
     // Define snake movement order (left to right, then down, then up)
-    const snakeOrder = [0, 1, 2, 5, 4, 3];
+    const snakeOrder = [0, 1, 2, 3];
     
     // Animate through each card position
     for (const orderIndex of snakeOrder) {
@@ -97,10 +81,10 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       clickedCard.style.transform = `translate(${pos.x - startPos.x}px, ${pos.y - startPos.y}px)`;
       cards[orderIndex].classList.add('eaten');
       
-      await new Promise(resolve => setTimeout(resolve, 400)); // Slower animation
+      await new Promise(resolve => setTimeout(resolve, 400));
     }
 
-    // Move to final position and expand
+    // Move to center and expand
     clickedCard.style.transform = 'translate(0, 0)';
     await new Promise(resolve => setTimeout(resolve, 400));
     clickedCard.classList.add('snake-expanded');
@@ -146,6 +130,22 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
             <h2 className="text-2xl font-bold text-white drop-shadow-lg">
               {section.title}
             </h2>
+            {expandingCard === section.id && (
+              <div className="mt-8 text-white text-left">
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSectionClick(null);
+                  }}
+                  className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                <div className="prose prose-invert max-w-none">
+                  {section.content}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ))}

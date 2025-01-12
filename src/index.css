@@ -26,7 +26,7 @@
 
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
   max-width: 1200px;
   width: 100%;
@@ -57,12 +57,12 @@
 }
 
 .bento-card.snake-expanded {
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  transform: translate(0, 0) !important;
-  border-radius: 0;
+  width: 75vw;
+  height: 75vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  border-radius: 2rem;
   transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   justify-content: flex-start;
@@ -127,7 +127,7 @@
 
 @media (max-width: 768px) {
   .bento-grid {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr;
     gap: 1rem;
     padding: 1rem;
     height: auto;
@@ -141,6 +141,8 @@
   }
 
   .snake-expanded {
+    width: 90vw;
+    height: 80vh;
     padding: 2rem;
   }
 
@@ -171,6 +173,8 @@
   }
 
   .snake-expanded {
+    width: 95vw;
+    height: 85vh;
     padding: 1.5rem;
   }
 }
