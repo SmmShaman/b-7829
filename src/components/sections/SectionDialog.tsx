@@ -13,6 +13,25 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
 
   if (!openSection) return null;
 
+  const getSectionImage = (section: string) => {
+    switch (section) {
+      case "about":
+        return "/images/about-bg.jpg";
+      case "services":
+        return "/images/services-bg.jpg";
+      case "skills":
+        return "/images/skills-bg.jpg";
+      case "projects":
+        return "/images/projects-bg.jpg";
+      case "testimonials":
+        return "/images/testimonials-bg.jpg";
+      case "contact":
+        return "/images/contact-bg.jpg";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8">
       <div 
@@ -28,19 +47,28 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
         </button>
         
         <ScrollArea className="h-[80vh] w-full">
-          <div className="p-8">
-            {openSection === "contact" ? (
-              <ContactForm />
-            ) : (
-              <div className="prose prose-invert max-w-none">
-                <h2 className="text-3xl font-bold mb-6 text-white">
-                  {t(openSection)}
-                </h2>
-                <div className="text-lg leading-relaxed text-white/90">
-                  {t(`${openSection}_content`)}
+          <div className="flex p-8">
+            <div className="w-1/4 animate-slide-right">
+              <img 
+                src={getSectionImage(openSection)}
+                alt={t(openSection)}
+                className="w-full h-full object-cover rounded-lg"
+              />
+            </div>
+            <div className="flex-1 pl-8">
+              {openSection === "contact" ? (
+                <ContactForm />
+              ) : (
+                <div className="prose prose-invert max-w-none">
+                  <h2 className="text-3xl font-bold mb-6 text-white">
+                    {t(openSection)}
+                  </h2>
+                  <div className="text-lg leading-relaxed text-white/90">
+                    {t(`${openSection}_content`)}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </ScrollArea>
       </div>

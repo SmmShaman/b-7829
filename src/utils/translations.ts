@@ -13,7 +13,14 @@ export const translations = {
     testimonials: "Testimonials",
     testimonialsContent: "What our clients say about our services and solutions",
     contact: "Contact",
-    contactContent: "Get in touch with me to discuss your project"
+    contactContent: "Get in touch with me to discuss your project",
+    name: "Name",
+    email: "Email",
+    message: "Message",
+    send_message: "Send Message",
+    sending: "Sending...",
+    message_sent: "Message sent successfully!",
+    error_sending: "Error sending message. Please try again."
   },
   UA: {
     title: "Експерт з маркетингу та аналітики | Творець Elvarika",
@@ -29,7 +36,14 @@ export const translations = {
     testimonials: "Відгуки",
     testimonialsContent: "Що кажуть наші клієнти про наші послуги та рішення",
     contact: "Контакти",
-    contactContent: "Зв'яжіться зі мною, щоб обговорити ваш проект"
+    contactContent: "Зв'яжіться зі мною, щоб обговорити ваш проект",
+    name: "Ім'я",
+    email: "Електронна пошта",
+    message: "Повідомлення",
+    send_message: "Надіслати повідомлення",
+    sending: "Відправка...",
+    message_sent: "Повідомлення успішно надіслано!",
+    error_sending: "Помилка відправки повідомлення. Спробуйте ще раз."
   },
   NO: {
     title: "Markeds- og analyseekspert | Skaper av Elvarika",
@@ -45,6 +59,13 @@ export const translations = {
     testimonials: "Anbefalinger",
     testimonialsContent: "Hva våre kunder sier om våre tjenester og løsninger",
     contact: "Kontakt",
-    contactContent: "Ta kontakt med meg for å diskutere prosjektet ditt"
+    contactContent: "Ta kontakt med meg for å diskutere prosjektet ditt",
+    name: "Navn",
+    email: "E-post",
+    message: "Melding",
+    send_message: "Send melding",
+    sending: "Sender...",
+    message_sent: "Melding sendt!",
+    error_sending: "Feil ved sending av melding. Prøv igjen."
   }
 };
