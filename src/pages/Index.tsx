@@ -27,17 +27,24 @@ const Index = () => {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white overflow-hidden">
-      <Header />
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white">
+      {/* Fixed Header */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <Header />
+      </div>
       
-      <main className="flex-grow flex items-center justify-center relative">
+      {/* Main Content with Padding */}
+      <main className="flex-grow flex items-center justify-center mt-[20vh] mb-[10vh]">
         <BentoGrid 
           onSectionClick={handleCardClick}
           expandingCard={expandingCard}
         />
       </main>
 
-      <Footer />
+      {/* Fixed Footer */}
+      <div className="fixed bottom-0 left-0 right-0 z-50">
+        <Footer />
+      </div>
 
       <SectionDialog 
         openSection={openSection}
