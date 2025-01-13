@@ -15,9 +15,9 @@ export const useTranslations = () => {
     localStorage.setItem("preferredLanguage", newLanguage);
   }, []);
 
-  const t = useCallback((key: string) => {
+  const t = useCallback((key: keyof typeof translations.en) => {
     const langKey = currentLanguage.toLowerCase() as keyof typeof translations;
-    return translations[langKey][key as keyof typeof translations.en];
+    return translations[langKey][key];
   }, [currentLanguage]);
 
   useEffect(() => {

@@ -21,6 +21,13 @@ export const translations = {
     contact: "Contact",
     contact_title: "Contact",
     contact_description: "Get in touch with me to discuss your project or business needs. I'm always open to new challenges and opportunities.",
+    name: "Name",
+    email: "Email",
+    message: "Message",
+    send_message: "Send Message",
+    sending: "Sending...",
+    message_sent: "Message sent successfully!",
+    error_sending: "Error sending message",
     close: "Close"
   },
   no: {
@@ -45,6 +52,13 @@ export const translations = {
     contact: "Kontakt",
     contact_title: "Kontakt",
     contact_description: "Ta kontakt med meg for å diskutere ditt prosjekt eller forretningsbehov. Jeg er alltid åpen for nye utfordringer og muligheter.",
+    name: "Navn",
+    email: "E-post",
+    message: "Melding",
+    send_message: "Send melding",
+    sending: "Sender...",
+    message_sent: "Melding sendt!",
+    error_sending: "Feil ved sending av melding",
     close: "Lukk"
   },
   ua: {
@@ -69,6 +83,13 @@ export const translations = {
     contact: "Контакти",
     contact_title: "Контакти",
     contact_description: "Зв'яжіться зі мною, щоб обговорити ваш проект чи бізнес-потреби. Я завжди відкритий до нових викликів та можливостей.",
+    name: "Ім'я",
+    email: "Email",
+    message: "Повідомлення",
+    send_message: "Надіслати",
+    sending: "Надсилання...",
+    message_sent: "Повідомлення надіслано!",
+    error_sending: "Помилка при надсиланні",
     close: "Закрити"
   }
 } as const;
