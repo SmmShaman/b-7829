@@ -99,18 +99,18 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-[90vw] max-w-7xl mx-auto h-[calc(100vh-40vh)] mt-[15vh] mb-[15vh]">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-16 w-[85vw] max-w-7xl mx-auto h-[calc(100vh-40vh)] mt-[15vh] mb-[15vh] p-8">
       {sections.map((section, index) => (
         <div
           key={section.id}
           ref={el => el && cardRefs.current.set(section.id, el)}
-          className="relative overflow-hidden rounded-[2rem] aspect-square cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20"
+          className="relative overflow-hidden rounded-[2rem] aspect-square cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-lg"
           onClick={() => handleCardClick(section.id, index)}
           style={{
             backgroundImage: `url(${section.backgroundImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
           }}
         >
           <div 
@@ -120,14 +120,14 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
               backdropFilter: 'blur(8px)',
             }} 
           />
-          <div className="relative h-full p-8 flex flex-col items-center justify-center text-white">
-            <div className="mb-6 transform transition-transform group-hover:scale-110 bg-white/10 p-4 rounded-full">
+          <div className="relative h-full p-10 flex flex-col items-center justify-center text-white">
+            <div className="mb-8 transform transition-transform group-hover:scale-110 bg-white/10 p-5 rounded-full">
               {section.icon}
             </div>
-            <h2 className="text-2xl font-bold text-center mb-3">
+            <h2 className="text-2xl font-bold text-center mb-4">
               {t(section.titleKey)}
             </h2>
-            <p className="text-sm text-center text-white/80">
+            <p className="text-sm text-center text-white/90">
               {t(section.descriptionKey)}
             </p>
           </div>
