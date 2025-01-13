@@ -37,7 +37,7 @@
 }
 
 .bento-card {
-  @apply bg-card p-8 rounded-2xl transition-all duration-300 hover:bg-card-hover;
+  @apply bg-card p-8 rounded-2xl transition-all duration-300;
   border: 1px solid rgba(255, 255, 255, 0.1);
   min-height: 200px;
   display: flex;
@@ -47,6 +47,7 @@
 }
 
 .bento-card:hover {
+  @apply bg-card-hover;
   transform: translateY(-4px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
