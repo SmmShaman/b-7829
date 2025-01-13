@@ -26,48 +26,48 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       titleKey: "section1.title",
       descriptionKey: "section1.description",
       icon: <BookOpen />,
-      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-      backgroundImage: "/path-to-image-1.jpg",
+      gradient: "linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1432821596592-e2c18b78144f?q=80&w=1000&auto=format&fit=crop",
     },
     {
       id: "2",
       titleKey: "section2.title",
       descriptionKey: "section2.description",
       icon: <Briefcase />,
-      gradient: "linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)",
-      backgroundImage: "/path-to-image-2.jpg",
+      gradient: "linear-gradient(135deg, rgba(255, 154, 158, 0.8) 0%, rgba(250, 208, 196, 0.8) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop",
     },
     {
       id: "3",
       titleKey: "section3.title",
       descriptionKey: "section3.description",
       icon: <Wrench />,
-      gradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
-      backgroundImage: "/path-to-image-3.jpg",
+      gradient: "linear-gradient(135deg, rgba(246, 211, 101, 0.8) 0%, rgba(253, 160, 133, 0.8) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1000&auto=format&fit=crop",
     },
     {
       id: "4",
       titleKey: "section4.title",
       descriptionKey: "section4.description",
       icon: <BarChart2 />,
-      gradient: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
-      backgroundImage: "/path-to-image-4.jpg",
+      gradient: "linear-gradient(135deg, rgba(161, 140, 209, 0.8) 0%, rgba(251, 194, 235, 0.8) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop",
     },
     {
       id: "5",
       titleKey: "section5.title",
       descriptionKey: "section5.description",
       icon: <MessageSquare />,
-      gradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
-      backgroundImage: "/path-to-image-5.jpg",
+      gradient: "linear-gradient(135deg, rgba(255, 236, 210, 0.8) 0%, rgba(252, 182, 159, 0.8) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1000&auto=format&fit=crop",
     },
     {
       id: "6",
       titleKey: "section6.title",
       descriptionKey: "section6.description",
       icon: <Mail />,
-      gradient: "linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)",
-      backgroundImage: "/path-to-image-6.jpg",
+      gradient: "linear-gradient(135deg, rgba(137, 247, 254, 0.8) 0%, rgba(102, 166, 255, 0.8) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1512626120412-faf41adb4874?q=80&w=1000&auto=format&fit=crop",
     },
   ];
 
@@ -99,12 +99,12 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="grid grid-cols-3 gap-6 w-full max-w-6xl mx-auto h-[calc(100vh-40vh)] mt-16 mb-16 p-6">
+    <div className="grid grid-cols-3 gap-12 w-[90vw] max-w-7xl mx-auto min-h-[60vh] mt-[10vh] mb-[10vh] p-8">
       {sections.map((section, index) => (
         <div
           key={section.id}
           ref={el => el && cardRefs.current.set(section.id, el)}
-          className="relative overflow-hidden rounded-[2rem] aspect-square cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-lg"
+          className="relative overflow-hidden rounded-[2rem] aspect-square cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50"
           onClick={() => handleCardClick(section.id, index)}
           style={{
             backgroundImage: `url(${section.backgroundImage})`,
@@ -114,14 +114,13 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
           }}
         >
           <div 
-            className="absolute inset-0" 
+            className="absolute inset-0 backdrop-blur-[2px]" 
             style={{ 
               background: section.gradient,
-              backdropFilter: 'blur(8px)',
             }} 
           />
-          <div className="relative h-full p-10 flex flex-col items-center justify-center text-white">
-            <div className="mb-8 transform transition-transform group-hover:scale-110 bg-white/10 p-5 rounded-full">
+          <div className="relative h-full p-8 flex flex-col items-center justify-center text-white">
+            <div className="mb-6 transform transition-transform group-hover:scale-110 bg-white/20 p-4 rounded-full">
               {section.icon}
             </div>
             <h2 className="text-2xl font-bold text-center mb-4">
