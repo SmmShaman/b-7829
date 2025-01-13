@@ -99,13 +99,13 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="flex items-center justify-center h-full w-full px-4 md:px-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 w-full max-w-6xl mx-auto place-items-center">
+    <div className="flex items-center justify-center min-h-[70vh] w-full px-6 md:px-10 lg:px-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 w-full max-w-6xl mx-auto">
         {sections.map((section, index) => (
           <div
             key={section.id}
             ref={el => el && cardRefs.current.set(section.id, el)}
-            className="relative overflow-hidden rounded-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50 min-h-[200px] md:min-h-[250px] w-full"
+            className="relative overflow-hidden rounded-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50 min-h-[220px] md:min-h-[260px] w-full"
             onClick={() => handleCardClick(section.id, index)}
             style={{
               backgroundImage: `url(${section.backgroundImage})`,
@@ -116,18 +116,16 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
           >
             <div 
               className="absolute inset-0 backdrop-blur-[2px]" 
-              style={{ 
-                background: section.gradient,
-              }} 
+              style={{ background: section.gradient }} 
             />
-            <div className="relative h-full p-4 md:p-6 flex flex-col items-center justify-center text-white">
-              <div className="mb-3 md:mb-4 transform transition-transform group-hover:scale-110 bg-white/20 p-3 rounded-full">
+            <div className="relative h-full p-6 md:p-8 flex flex-col items-center justify-center text-white">
+              <div className="mb-4 md:mb-6 transform transition-transform group-hover:scale-110 bg-white/20 p-4 rounded-full">
                 {section.icon}
               </div>
-              <h2 className="text-lg md:text-xl font-bold text-center mb-2">
+              <h2 className="text-xl md:text-2xl font-bold text-center mb-3 md:mb-4">
                 {t(section.titleKey)}
               </h2>
-              <p className="text-xs md:text-sm text-center text-white/90 line-clamp-3">
+              <p className="text-sm md:text-base text-center text-white/90 line-clamp-3 max-w-[90%] mx-auto">
                 {t(section.descriptionKey)}
               </p>
             </div>
