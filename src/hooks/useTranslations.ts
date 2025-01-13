@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useCallback, useEffect } from "react";
 
@@ -9,16 +9,18 @@ export interface Translation {
   en_text: string;
   ua_text: string;
   no_text: string;
+  ru_text?: string;
 }
 
 export const useTranslations = () => {
+  const queryClient = useQueryClient();
   const [currentLanguage, setCurrentLanguage] = useState<Language>(() => {
     const savedLanguage = localStorage.getItem("preferredLanguage");
     return (savedLanguage as Language) || "EN";
   });
 
   const { data: translations, isLoading } = useQuery({
-    queryKey: ["translations"],
+    queryKey: ["translations", currentLanguage],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("translations")
@@ -30,12 +32,18 @@ export const useTranslations = () => {
       }
 
       return data as Translation[];
-    }
+    },
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 
-  useEffect(() => {
-    localStorage.setItem("preferredLanguage", currentLanguage);
-  }, [currentLanguage]);
+  const handleLanguageChange = useCallback((newLanguage: Language) => {
+    if (newLanguage !== currentLanguage) {
+      setCurrentLanguage(newLanguage);
+      localStorage.setItem("preferredLanguage", newLanguage);
+      // Invalidate the translations query to force a refresh
+      queryClient.invalidateQueries({ queryKey: ["translations"] });
+    }
+  }, [currentLanguage, queryClient]);
 
   const t = useCallback((key: string) => {
     if (!translations) return key;
@@ -61,7 +69,7 @@ export const useTranslations = () => {
   return {
     t,
     currentLanguage,
-    setCurrentLanguage,
+    setCurrentLanguage: handleLanguageChange,
     isLoading
   };
 };

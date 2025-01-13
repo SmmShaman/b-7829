@@ -3,6 +3,12 @@ import { Language, useTranslations } from "@/hooks/useTranslations";
 const Header = () => {
   const { t, currentLanguage, setCurrentLanguage } = useTranslations();
 
+  const handleLanguageChange = (lang: Language) => {
+    if (currentLanguage !== lang) {
+      setCurrentLanguage(lang);
+    }
+  };
+
   return (
     <header className="fixed top-0 w-full glass-effect z-50 h-[20vh]">
       <div className="w-full h-full px-4 md:px-8 py-4 flex flex-col md:flex-row items-center justify-between">
@@ -21,7 +27,7 @@ const Header = () => {
           {["NO", "EN", "UA"].map((lang) => (
             <button
               key={lang}
-              onClick={() => setCurrentLanguage(lang as Language)}
+              onClick={() => handleLanguageChange(lang as Language)}
               className={`px-3 md:px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
                 currentLanguage === lang
                   ? "bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-white"
