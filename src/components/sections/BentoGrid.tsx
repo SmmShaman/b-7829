@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 interface Section {
   id: string;
   titleKey: string;
-  descriptionKey: string;
   icon: React.ReactNode;
   gradient: string;
   backgroundImage: string;
@@ -24,7 +23,6 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     {
       id: "1",
       titleKey: "about",
-      descriptionKey: "aboutContent",
       icon: <BookOpen className="w-6 h-6 md:w-8 md:h-8" />,
       gradient: "linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%)",
       backgroundImage: "https://images.unsplash.com/photo-1432821596592-e2c18b78144f?q=80&w=1000&auto=format&fit=crop",
@@ -32,7 +30,6 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     {
       id: "2",
       titleKey: "projects",
-      descriptionKey: "projectsContent",
       icon: <Briefcase className="w-6 h-6 md:w-8 md:h-8" />,
       gradient: "linear-gradient(135deg, rgba(255, 154, 158, 0.8) 0%, rgba(250, 208, 196, 0.8) 100%)",
       backgroundImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop",
@@ -40,7 +37,6 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     {
       id: "3",
       titleKey: "services",
-      descriptionKey: "servicesContent",
       icon: <Wrench className="w-6 h-6 md:w-8 md:h-8" />,
       gradient: "linear-gradient(135deg, rgba(246, 211, 101, 0.8) 0%, rgba(253, 160, 133, 0.8) 100%)",
       backgroundImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1000&auto=format&fit=crop",
@@ -48,7 +44,6 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     {
       id: "4",
       titleKey: "skills",
-      descriptionKey: "skillsContent",
       icon: <BarChart2 className="w-6 h-6 md:w-8 md:h-8" />,
       gradient: "linear-gradient(135deg, rgba(161, 140, 209, 0.8) 0%, rgba(251, 194, 235, 0.8) 100%)",
       backgroundImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop",
@@ -56,7 +51,6 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     {
       id: "5",
       titleKey: "testimonials",
-      descriptionKey: "testimonialsContent",
       icon: <MessageSquare className="w-6 h-6 md:w-8 md:h-8" />,
       gradient: "linear-gradient(135deg, rgba(255, 236, 210, 0.8) 0%, rgba(252, 182, 159, 0.8) 100%)",
       backgroundImage: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1000&auto=format&fit=crop",
@@ -64,7 +58,6 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     {
       id: "6",
       titleKey: "contact",
-      descriptionKey: "contactContent",
       icon: <Mail className="w-6 h-6 md:w-8 md:h-8" />,
       gradient: "linear-gradient(135deg, rgba(137, 247, 254, 0.8) 0%, rgba(102, 166, 255, 0.8) 100%)",
       backgroundImage: "https://images.unsplash.com/photo-1512626120412-faf41adb4874?q=80&w=1000&auto=format&fit=crop",
@@ -105,7 +98,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
           <div
             key={section.id}
             ref={el => el && cardRefs.current.set(section.id, el)}
-            className="relative overflow-hidden rounded-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50 min-h-[200px] md:min-h-[220px]"
+            className="relative overflow-hidden rounded-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50 h-[250px]"
             onClick={() => handleCardClick(section.id, index)}
             style={{
               backgroundImage: `url(${section.backgroundImage})`,
@@ -122,12 +115,9 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
               <div className="mb-3 md:mb-4 transform transition-transform group-hover:scale-110 bg-white/20 p-3 md:p-4 rounded-full">
                 {section.icon}
               </div>
-              <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center mb-2 md:mb-3">
+              <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-center">
                 {t(section.titleKey)}
               </h2>
-              <p className="text-sm md:text-base text-center text-white/90 line-clamp-3 max-w-[90%] mx-auto">
-                {t(section.descriptionKey)}
-              </p>
             </div>
           </div>
         ))}
