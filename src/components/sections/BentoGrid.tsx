@@ -99,13 +99,13 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="flex items-center justify-center h-full px-4 md:px-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 w-full max-w-7xl mx-auto">
+    <div className="flex items-center justify-center h-full w-full px-4 md:px-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 w-full max-w-6xl mx-auto place-items-center">
         {sections.map((section, index) => (
           <div
             key={section.id}
             ref={el => el && cardRefs.current.set(section.id, el)}
-            className="relative overflow-hidden rounded-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50 min-h-[200px] md:min-h-[250px]"
+            className="relative overflow-hidden rounded-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50 min-h-[200px] md:min-h-[250px] w-full"
             onClick={() => handleCardClick(section.id, index)}
             style={{
               backgroundImage: `url(${section.backgroundImage})`,
