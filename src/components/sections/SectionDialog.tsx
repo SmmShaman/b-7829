@@ -16,17 +16,17 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
   const getSectionImage = (section: string) => {
     switch (section) {
       case "about":
-        return "/images/professional-headshot.jpg";
-      case "services":
-        return "/images/services-bg.jpg";
-      case "skills":
-        return "/images/skills-bg.jpg";
+        return "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158";
       case "projects":
-        return "/images/projects-bg.jpg";
+        return "https://images.unsplash.com/photo-1460925895917-afdab827c52f";
+      case "services":
+        return "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40";
+      case "skills":
+        return "https://images.unsplash.com/photo-1516321318423-f06f85e504b3";
       case "testimonials":
-        return "/images/testimonials-bg.jpg";
+        return "https://images.unsplash.com/photo-1521791136064-7986c2920216";
       case "contact":
-        return "/images/contact-bg.jpg";
+        return "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d";
       default:
         return "";
     }
@@ -49,14 +49,13 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
         
         <ScrollArea className="h-full w-full">
           <div className="flex p-8 h-full">
-            <div className="w-1/4 animate-slide-in-right">
-              <div className="relative h-full">
-                <img 
-                  src={getSectionImage(openSection)}
-                  alt={t(`${openSection}_title`)}
-                  className="w-full h-full object-cover rounded-lg transition-transform duration-500 ease-out transform translate-x-0"
-                />
-              </div>
+            <div className="w-1/3 animate-slide-right relative overflow-hidden rounded-lg">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+              <img 
+                src={getSectionImage(openSection)}
+                alt={t(`${openSection}_title`)}
+                className="w-full h-full object-cover transition-transform duration-500 ease-out hover:scale-105"
+              />
             </div>
             <div className="flex-1 pl-8">
               {openSection === "contact" ? (
