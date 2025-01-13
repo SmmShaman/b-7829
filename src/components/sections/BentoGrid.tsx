@@ -99,13 +99,13 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="flex items-center justify-center h-[80vh]">
-      <div className="grid grid-cols-3 gap-12 w-[90vw] max-w-7xl mx-auto p-8">
+    <div className="flex items-center justify-center h-full">
+      <div className="grid grid-cols-3 gap-8 w-[80vw] max-w-6xl mx-auto p-4">
         {sections.map((section, index) => (
           <div
             key={section.id}
             ref={el => el && cardRefs.current.set(section.id, el)}
-            className="relative overflow-hidden rounded-[2rem] aspect-square cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50"
+            className="relative overflow-hidden rounded-2xl aspect-square cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50"
             onClick={() => handleCardClick(section.id, index)}
             style={{
               backgroundImage: `url(${section.backgroundImage})`,
@@ -120,14 +120,14 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
                 background: section.gradient,
               }} 
             />
-            <div className="relative h-full p-8 flex flex-col items-center justify-center text-white">
-              <div className="mb-6 transform transition-transform group-hover:scale-110 bg-white/20 p-4 rounded-full">
+            <div className="relative h-full p-6 flex flex-col items-center justify-center text-white">
+              <div className="mb-4 transform transition-transform group-hover:scale-110 bg-white/20 p-3 rounded-full">
                 {section.icon}
               </div>
-              <h2 className="text-2xl font-bold text-center mb-4">
+              <h2 className="text-xl font-bold text-center mb-2">
                 {t(section.titleKey)}
               </h2>
-              <p className="text-sm text-center text-white/90">
+              <p className="text-xs text-center text-white/90">
                 {t(section.descriptionKey)}
               </p>
             </div>
