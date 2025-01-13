@@ -32,7 +32,7 @@ const Index = () => {
         <Header />
       </div>
       
-      <main className="flex-grow mt-[15vh] mb-[15vh] min-h-[70vh]">
+      <main className="flex-grow mt-[12vh] mb-[12vh] min-h-[70vh]">
         <BentoGrid 
           onSectionClick={handleCardClick}
           expandingCard={expandingCard}
