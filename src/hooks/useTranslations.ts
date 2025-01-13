@@ -10,6 +10,7 @@ export const useTranslations = () => {
     const savedLanguage = localStorage.getItem("preferredLanguage");
     return (savedLanguage as Language) || "EN";
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleLanguageChange = useCallback((newLanguage: Language) => {
     if (newLanguage !== currentLanguage) {
@@ -40,12 +41,13 @@ export const useTranslations = () => {
     if (savedLanguage && savedLanguage !== currentLanguage) {
       setCurrentLanguage(savedLanguage);
     }
+    setIsLoading(false);
   }, []);
 
   return {
     t,
     currentLanguage,
     setCurrentLanguage: handleLanguageChange,
-    isLoading: false
+    isLoading
   };
 };
