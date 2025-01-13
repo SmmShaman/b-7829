@@ -2,8 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "@/hooks/useTranslations";
 import MapSection from "./MapSection";
-import ClockSection from "./ClockSection";
-import QuoteSection from "./QuoteSection";
 
 interface BentoGridProps {
   onSectionClick: (sectionId: string) => void;
@@ -27,28 +25,28 @@ const BentoGrid: React.FC<BentoGridProps> = ({ onSectionClick, expandingCard }) 
       content: null,
     },
     {
-      id: "schedule",
-      title: t("schedule"),
-      description: t("schedule_description"),
-      content: <ClockSection />,
+      id: "services",
+      title: t("services"),
+      description: t("services_description"),
+      content: null,
     },
     {
-      id: "quote",
-      title: t("quote"),
-      description: t("quote_description"),
-      content: <QuoteSection />,
+      id: "skills",
+      title: t("skills"),
+      description: t("skills_description"),
+      content: null,
+    },
+    {
+      id: "testimonials",
+      title: t("testimonials"),
+      description: t("testimonials_description"),
+      content: null,
     },
     {
       id: "location",
       title: t("location") || "Location",
       description: t("location_description") || "Find me here",
       content: <MapSection />,
-    },
-    {
-      id: "contact",
-      title: t("contact"),
-      description: t("contact_description"),
-      content: null,
     },
   ];
 

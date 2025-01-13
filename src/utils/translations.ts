@@ -1,147 +1,74 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useState, useCallback } from "react";
-
-export type Language = "EN" | "UA" | "NO";
-
-export interface Translation {
-  key: string;
-  en_text: string;
-  ua_text: string;
-  no_text: string;
-  ru_text?: string;
-}
-
-export const useTranslations = () => {
-  const queryClient = useQueryClient();
-  const [currentLanguage, setCurrentLanguage] = useState<Language>(() => {
-    const savedLanguage = localStorage.getItem("preferredLanguage");
-    return (savedLanguage as Language) || "EN";
-  });
-
-  const { data: translations, isLoading } = useQuery({
-    queryKey: ["translations", currentLanguage],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("translations")
-        .select("*");
-
-      if (error) {
-        console.error("Error fetching translations:", error);
-        return [];
-      }
-
-      return data as Translation[];
-    },
-    staleTime: 0, // Disable caching to ensure fresh data
-  });
-
-  const handleLanguageChange = useCallback((newLanguage: Language) => {
-    if (newLanguage !== currentLanguage) {
-      setCurrentLanguage(newLanguage);
-      localStorage.setItem("preferredLanguage", newLanguage);
-      // Force a refresh of the translations
-      queryClient.invalidateQueries({ queryKey: ["translations"] });
-    }
-  }, [currentLanguage, queryClient]);
-
-  const t = useCallback((key: string) => {
-    if (!translations) return key;
-
-    const translation = translations.find(t => t.key === key);
-    if (!translation) {
-      console.warn(`Translation missing for key: ${key}`);
-      return key;
-    }
-
-    switch (currentLanguage) {
-      case "EN":
-        return translation.en_text;
-      case "UA":
-        return translation.ua_text;
-      case "NO":
-        return translation.no_text;
-      default:
-        return translation.en_text;
-    }
-  }, [translations, currentLanguage]);
-
-  return {
-    t,
-    currentLanguage,
-    setCurrentLanguage: handleLanguageChange,
-    isLoading
-  };
-};
-
 export const translations = {
   en: {
     about: "About",
-    about_description: "Learn more about me",
+    about_description: "Learn more about me and my journey",
     projects: "Projects",
-    projects_description: "Check out my work",
+    projects_description: "Check out my latest work",
     services: "Services",
-    services_description: "What I can offer",
+    services_description: "What I can do for you",
     skills: "Skills",
-    skills_description: "My expertise",
+    skills_description: "Technologies I work with",
     testimonials: "Testimonials",
     testimonials_description: "What others say about me",
+    contact: "Contact",
+    contact_description: "Get in touch with me",
+    name: "Name",
+    email: "Email",
+    message: "Message",
+    send_message: "Send Message",
+    sending: "Sending...",
+    message_sent: "Message sent successfully!",
+    error_sending: "Error sending message. Please try again.",
     location: "Location",
     location_description: "Find me here",
-    contact: "Contact",
-    contact_description: "Get in touch",
-    schedule: "Schedule & Status",
-    schedule_description: "My working hours and availability",
-    quote: "Quote of the Day",
-    quote_description: "Daily inspiration",
-    status_working: "Currently Working",
-    status_available: "Available",
-    status_resting: "Resting",
+    location_error: "Could not get your location. Please check your permissions.",
   },
   no: {
-    about: "Om",
-    about_description: "Lær mer om meg",
+    about: "Om meg",
+    about_description: "Lær mer om meg og min reise",
     projects: "Prosjekter",
-    projects_description: "Se arbeidet mitt",
+    projects_description: "Se mitt siste arbeid",
     services: "Tjenester",
-    services_description: "Hva jeg kan tilby",
+    services_description: "Hva jeg kan gjøre for deg",
     skills: "Ferdigheter",
-    skills_description: "Min ekspertise",
-    testimonials: "Vitnesbyrd",
+    skills_description: "Teknologier jeg jobber med",
+    testimonials: "Anbefalinger",
     testimonials_description: "Hva andre sier om meg",
-    location: "Sted",
-    location_description: "Finn meg her",
     contact: "Kontakt",
-    contact_description: "Kom i kontakt",
-    schedule: "Timeplan & Status",
-    schedule_description: "Mine arbeidstimer og tilgjengelighet",
-    quote: "Dagens sitat",
-    quote_description: "Daglig inspirasjon",
-    status_working: "Jobber nå",
-    status_available: "Tilgjengelig",
-    status_resting: "Hviler",
+    contact_description: "Ta kontakt med meg",
+    name: "Navn",
+    email: "E-post",
+    message: "Melding",
+    send_message: "Send melding",
+    sending: "Sender...",
+    message_sent: "Melding sendt!",
+    error_sending: "Feil ved sending av melding. Prøv igjen.",
+    location: "Plassering",
+    location_description: "Finn meg her",
+    location_error: "Kunne ikke hente posisjonen din. Vennligst sjekk tillatelsene dine.",
   },
   ua: {
     about: "Про мене",
-    about_description: "Дізнайтеся більше про мене",
+    about_description: "Дізнайтеся більше про мене та мій шлях",
     projects: "Проекти",
-    projects_description: "Перегляньте мою роботу",
+    projects_description: "Перегляньте мої останні роботи",
     services: "Послуги",
-    services_description: "Що я можу запропонувати",
+    services_description: "Що я можу зробити для вас",
     skills: "Навички",
-    skills_description: "Моя експертиза",
+    skills_description: "Технології, з якими я працюю",
     testimonials: "Відгуки",
-    testimonials_description: "Що про мене кажуть інші",
+    testimonials_description: "Що кажуть про мене інші",
+    contact: "Контакти",
+    contact_description: "Зв'яжіться зі мною",
+    name: "Ім'я",
+    email: "Email",
+    message: "Повідомлення",
+    send_message: "Надіслати повідомлення",
+    sending: "Надсилання...",
+    message_sent: "Повідомлення надіслано!",
+    error_sending: "Помилка надсилання повідомлення. Спробуйте ще раз.",
     location: "Місцезнаходження",
     location_description: "Знайдіть мене тут",
-    contact: "Контакт",
-    contact_description: "Зв'яжіться зі мною",
-    schedule: "Розклад та Статус",
-    schedule_description: "Мій робочий час та доступність",
-    quote: "Цитата Дня",
-    quote_description: "Щоденне натхнення",
-    status_working: "Зараз працюю",
-    status_available: "Доступний",
-    status_resting: "Відпочиваю",
+    location_error: "Не вдалося отримати ваше місцезнаходження. Перевірте дозволи.",
   },
-};
+} as const;
