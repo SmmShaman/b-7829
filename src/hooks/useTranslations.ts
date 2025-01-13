@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 
 export type Language = "EN" | "UA" | "NO";
 
@@ -33,14 +33,14 @@ export const useTranslations = () => {
 
       return data as Translation[];
     },
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    staleTime: 0, // Disable caching to ensure fresh data
   });
 
   const handleLanguageChange = useCallback((newLanguage: Language) => {
     if (newLanguage !== currentLanguage) {
       setCurrentLanguage(newLanguage);
       localStorage.setItem("preferredLanguage", newLanguage);
-      // Invalidate the translations query to force a refresh
+      // Force a refresh of the translations
       queryClient.invalidateQueries({ queryKey: ["translations"] });
     }
   }, [currentLanguage, queryClient]);

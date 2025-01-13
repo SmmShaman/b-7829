@@ -4,9 +4,7 @@ const Header = () => {
   const { t, currentLanguage, setCurrentLanguage } = useTranslations();
 
   const handleLanguageChange = (lang: Language) => {
-    if (currentLanguage !== lang) {
-      setCurrentLanguage(lang);
-    }
+    setCurrentLanguage(lang);
   };
 
   return (
