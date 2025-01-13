@@ -105,12 +105,12 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-[80vw] mx-auto h-[60vh] mt-[20vh] mb-[20vh]">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-[80vw] mx-auto h-[calc(100vh-40vh)] mt-[20vh] mb-[20vh]">
       {sections.map((section, index) => (
         <div
           key={section.id}
           ref={el => el && cardRefs.current.set(section.id, el)}
-          className="relative overflow-hidden rounded-[2rem] aspect-square cursor-pointer transform transition-transform duration-300"
+          className="relative overflow-hidden rounded-[2rem] aspect-square cursor-pointer transform transition-transform duration-300 hover:scale-105"
           onClick={() => handleCardClick(section.id, index)}
           style={{
             background: section.gradient,
@@ -121,12 +121,9 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
             <div className="mb-4">
               {section.icon}
             </div>
-            <h2 className="text-2xl font-bold mb-2">
+            <h2 className="text-2xl font-bold text-center">
               {t(section.titleKey)}
             </h2>
-            <p className="text-sm text-center text-gray-300">
-              {t(section.descriptionKey)}
-            </p>
           </div>
         </div>
       ))}
