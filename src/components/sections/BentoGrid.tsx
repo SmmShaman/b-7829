@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 interface Section {
   id: string;
   titleKey: string;
+  descriptionKey: string;
   icon: React.ReactNode;
   gradient: string;
 }
@@ -22,36 +23,42 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     {
       id: "about",
       titleKey: "about_title",
+      descriptionKey: "about_content",
       icon: <BookOpen className="w-8 h-8" />,
       gradient: "linear-gradient(225deg, rgba(255,226,159,0.1) 0%, rgba(255,169,159,0.1) 48%, rgba(255,113,154,0.1) 100%)"
     },
     {
       id: "services",
       titleKey: "services_title",
+      descriptionKey: "services_content",
       icon: <Wrench className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(255,200,169,0.1) 0%, rgba(236,106,140,0.1) 100%)"
     },
     {
       id: "skills",
       titleKey: "skills_title",
+      descriptionKey: "skills_content",
       icon: <BarChart2 className="w-8 h-8" />,
       gradient: "linear-gradient(102.3deg, rgba(147,39,143,0.1) 5.9%, rgba(234,172,232,0.1) 64%)"
     },
     {
       id: "projects",
       titleKey: "projects_title",
+      descriptionKey: "projects_content",
       icon: <Briefcase className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(157,178,217,0.1) 0%, rgba(24,54,126,0.1) 100%)"
     },
     {
       id: "testimonials",
       titleKey: "testimonials_title",
+      descriptionKey: "testimonials_content",
       icon: <MessageSquare className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(136,219,159,0.1) 0%, rgba(229,236,121,0.1) 100%)"
     },
     {
       id: "contact",
       titleKey: "contact_title",
+      descriptionKey: "contact_content",
       icon: <Mail className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(252,180,103,0.1) 0%, rgba(247,129,129,0.1) 100%)"
     }
@@ -98,7 +105,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-[80vw] mx-auto max-h-[60vh] mt-[20vh]">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-[80vw] mx-auto h-[60vh] mt-[20vh] mb-[20vh]">
       {sections.map((section, index) => (
         <div
           key={section.id}
@@ -114,9 +121,12 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
             <div className="mb-4">
               {section.icon}
             </div>
-            <h2 className="text-2xl font-bold">
+            <h2 className="text-2xl font-bold mb-2">
               {t(section.titleKey)}
             </h2>
+            <p className="text-sm text-center text-gray-300">
+              {t(section.descriptionKey)}
+            </p>
           </div>
         </div>
       ))}
