@@ -16,7 +16,7 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
   const getSectionImage = (section: string) => {
     switch (section) {
       case "about":
-        return "/images/about-bg.jpg";
+        return "/images/professional-headshot.jpg"; // Using a professional placeholder
       case "services":
         return "/images/services-bg.jpg";
       case "skills":
