@@ -1,7 +1,10 @@
 import { useTranslations } from "@/hooks/useTranslations";
+import { translations } from "@/utils/translations";
 import { X } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ContactForm from "./ContactForm";
+
+type SectionType = "about" | "projects" | "services" | "skills" | "testimonials" | "contact";
 
 interface SectionDialogProps {
   openSection: string | null;
@@ -32,42 +35,30 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
     }
   };
 
-  const getTitleKey = (section: string): keyof typeof translations.en => {
-    switch (section) {
-      case "about":
-        return "about_title";
-      case "projects":
-        return "projects_title";
-      case "services":
-        return "services_title";
-      case "skills":
-        return "skills_title";
-      case "testimonials":
-        return "testimonials_title";
-      case "contact":
-        return "contact_title";
-      default:
-        return "title";
-    }
+  const getTitleKey = (section: SectionType) => {
+    const keys = {
+      about: "about_title",
+      projects: "projects_title",
+      services: "services_title",
+      skills: "skills_title",
+      testimonials: "testimonials_title",
+      contact: "contact_title"
+    } as const;
+    
+    return keys[section] as keyof typeof translations.en;
   };
 
-  const getContentKey = (section: string): keyof typeof translations.en => {
-    switch (section) {
-      case "about":
-        return "about_content";
-      case "projects":
-        return "projects_content";
-      case "services":
-        return "services_content";
-      case "skills":
-        return "skills_content";
-      case "testimonials":
-        return "testimonials_content";
-      case "contact":
-        return "contact_description";
-      default:
-        return "description";
-    }
+  const getContentKey = (section: SectionType) => {
+    const keys = {
+      about: "about_content",
+      projects: "projects_content",
+      services: "services_content",
+      skills: "skills_content",
+      testimonials: "testimonials_content",
+      contact: "contact_description"
+    } as const;
+    
+    return keys[section] as keyof typeof translations.en;
   };
 
   return (
@@ -91,7 +82,7 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
               <img 
                 src={getSectionImage(openSection)}
-                alt={t(getTitleKey(openSection))}
+                alt={t(getTitleKey(openSection as SectionType))}
                 className="w-full h-full object-cover transition-transform duration-500 ease-out hover:scale-105"
               />
             </div>
@@ -101,10 +92,10 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
               ) : (
                 <div className="prose prose-invert max-w-none">
                   <h2 className="text-3xl font-bold mb-6 text-white">
-                    {t(getTitleKey(openSection))}
+                    {t(getTitleKey(openSection as SectionType))}
                   </h2>
                   <div className="text-lg leading-relaxed text-white/90 whitespace-pre-line">
-                    {t(getContentKey(openSection))}
+                    {t(getContentKey(openSection as SectionType))}
                   </div>
                 </div>
               )}
