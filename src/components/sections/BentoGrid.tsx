@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 interface Section {
   id: string;
-  title: string;
+  titleKey: string;
   icon: React.ReactNode;
   gradient: string;
 }
@@ -21,37 +21,37 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   const sections: Section[] = [
     {
       id: "about",
-      title: t("about"),
+      titleKey: "about",
       icon: <BookOpen className="w-8 h-8" />,
       gradient: "linear-gradient(225deg, rgba(255,226,159,0.1) 0%, rgba(255,169,159,0.1) 48%, rgba(255,113,154,0.1) 100%)"
     },
     {
       id: "services",
-      title: t("services"),
+      titleKey: "services",
       icon: <Wrench className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(255,200,169,0.1) 0%, rgba(236,106,140,0.1) 100%)"
     },
     {
       id: "skills",
-      title: t("skills"),
+      titleKey: "skills",
       icon: <BarChart2 className="w-8 h-8" />,
       gradient: "linear-gradient(102.3deg, rgba(147,39,143,0.1) 5.9%, rgba(234,172,232,0.1) 64%)"
     },
     {
       id: "projects",
-      title: t("projects"),
+      titleKey: "projects",
       icon: <Briefcase className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(157,178,217,0.1) 0%, rgba(24,54,126,0.1) 100%)"
     },
     {
       id: "testimonials",
-      title: t("testimonials"),
+      titleKey: "testimonials",
       icon: <MessageSquare className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(136,219,159,0.1) 0%, rgba(229,236,121,0.1) 100%)"
     },
     {
       id: "contact",
-      title: t("contact"),
+      titleKey: "contact",
       icon: <Mail className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(252,180,103,0.1) 0%, rgba(247,129,129,0.1) 100%)"
     }
@@ -115,7 +115,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
               {section.icon}
             </div>
             <h2 className="text-2xl font-bold">
-              {section.title}
+              {t(section.titleKey)}
             </h2>
           </div>
         </div>
