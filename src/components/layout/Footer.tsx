@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   const [time, setTime] = useState(new Date());
-  const { currentLanguage, setLanguage } = useTranslations();
+  const { currentLanguage, setCurrentLanguage } = useTranslations();
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -53,7 +53,7 @@ const Footer = () => {
                     className={`text-white hover:text-white ${
                       currentLanguage === lang.code ? 'bg-white/20' : 'hover:bg-white/10'
                     }`}
-                    onClick={() => setLanguage(lang.code)}
+                    onClick={() => setCurrentLanguage(lang.code.toUpperCase())}
                   >
                     {lang.label}
                   </Button>
