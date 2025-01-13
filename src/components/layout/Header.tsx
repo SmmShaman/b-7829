@@ -21,12 +21,12 @@ const Header = () => {
         >
           <div className="absolute inset-0 backdrop-blur-[2px]" />
           
-          <div className="relative h-full flex flex-col md:flex-row items-center justify-between p-6 md:p-8">
-            <div className="flex-1 text-center md:text-left">
-              <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-2">
+          <div className="relative h-full flex flex-col md:flex-row items-center justify-between px-8 py-6 md:px-12 md:py-8">
+            <div className="flex-1 text-center md:text-left space-y-3 md:space-y-4">
+              <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-white">
                 {t("name")}
               </h1>
-              <h2 className="text-sm md:text-base lg:text-lg text-white/90 mb-2">
+              <h2 className="text-sm md:text-base lg:text-lg text-white/90">
                 {t("title")}
               </h2>
               <p className="text-xs md:text-sm lg:text-base text-white/80 line-clamp-2">
@@ -34,7 +34,7 @@ const Header = () => {
               </p>
             </div>
             
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-4 md:mt-0">
               {["NO", "EN", "UA"].map((lang) => (
                 <button
                   key={lang}
