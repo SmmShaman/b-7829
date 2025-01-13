@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "@/hooks/useTranslations";
-import MapSection from "./MapSection";
+import ContactForm from "./ContactForm";
 
 interface BentoGridProps {
   onSectionClick: (sectionId: string) => void;
@@ -43,10 +43,10 @@ const BentoGrid: React.FC<BentoGridProps> = ({ onSectionClick, expandingCard }) 
       content: null,
     },
     {
-      id: "location",
-      title: t("location") || "Location",
-      description: t("location_description") || "Find me here",
-      content: <MapSection />,
+      id: "contact",
+      title: t("contact"),
+      description: t("contact_description"),
+      content: <ContactForm />,
     },
   ];
 
