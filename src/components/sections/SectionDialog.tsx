@@ -16,7 +16,7 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
   const getSectionImage = (section: string) => {
     switch (section) {
       case "about":
-        return "/images/professional-headshot.jpg"; // Using a professional placeholder
+        return "/images/professional-headshot.jpg";
       case "services":
         return "/images/services-bg.jpg";
       case "skills":
@@ -33,12 +33,12 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div 
         className="fixed inset-0 bg-black/80 backdrop-blur-sm" 
         onClick={onClose} 
       />
-      <div className="relative w-full max-w-4xl bg-card rounded-[2rem] shadow-2xl overflow-hidden animate-fade-in">
+      <div className="relative w-full max-w-4xl h-[calc(100vh-33.3vh)] mx-4 bg-card rounded-[2rem] shadow-2xl overflow-hidden animate-fade-in">
         <button 
           onClick={onClose}
           className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-10"
@@ -47,18 +47,14 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
           <X className="w-6 h-6 text-white" />
         </button>
         
-        <ScrollArea className="h-[80vh] w-full">
-          <div className="flex p-8">
+        <ScrollArea className="h-full w-full">
+          <div className="flex p-8 h-full">
             <div className="w-1/4 animate-slide-in-right">
               <div className="relative h-full">
                 <img 
                   src={getSectionImage(openSection)}
                   alt={t(`${openSection}_title`)}
-                  className="w-full h-[calc(80vh-4rem)] object-cover rounded-lg transition-transform duration-500 ease-out transform translate-x-0"
-                  style={{
-                    maxHeight: 'calc(80vh - 4rem)',
-                    objectFit: 'cover',
-                  }}
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-500 ease-out transform translate-x-0"
                 />
               </div>
             </div>
