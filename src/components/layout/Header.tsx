@@ -21,12 +21,12 @@ const Header = () => {
         >
           <div className="absolute inset-0 backdrop-blur-[2px]" />
           
-          <div className="relative h-full p-4 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-6">
+          <div className="relative h-full flex flex-col md:flex-row items-center justify-between p-6 md:p-8">
             <div className="flex-1 text-center md:text-left">
-              <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-0.5">
+              <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-2">
                 {t("name")}
               </h1>
-              <h2 className="text-sm md:text-base lg:text-lg text-white/90 mb-0.5">
+              <h2 className="text-sm md:text-base lg:text-lg text-white/90 mb-2">
                 {t("title")}
               </h2>
               <p className="text-xs md:text-sm lg:text-base text-white/80 line-clamp-2">
