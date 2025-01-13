@@ -105,7 +105,7 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
           <div
             key={section.id}
             ref={el => el && cardRefs.current.set(section.id, el)}
-            className="relative overflow-hidden rounded-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50 h-[250px]"
+            className="relative overflow-hidden rounded-2xl cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20 shadow-xl bg-card/50 min-h-[200px] md:min-h-[220px]"
             onClick={() => handleCardClick(section.id, index)}
             style={{
               backgroundImage: `url(${section.backgroundImage})`,
