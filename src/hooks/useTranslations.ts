@@ -17,7 +17,7 @@ export const useTranslations = () => {
 
   const t = useCallback((key: string) => {
     const langKey = currentLanguage.toLowerCase() as keyof typeof translations;
-    return translations[langKey]?.[key as keyof typeof translations.en] || key;
+    return translations[langKey][key as keyof typeof translations.en];
   }, [currentLanguage]);
 
   useEffect(() => {
