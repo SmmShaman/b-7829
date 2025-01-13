@@ -1,196 +1,91 @@
 import { useState, useEffect } from "react";
-import { BookOpen, Mail, MessageSquare, Clock, Wrench, Activity, X, Linkedin, Facebook, Instagram, Youtube, Send } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-
-type Language = "EN" | "UA" | "RU";
-
-interface Section {
-  id: string;
-  title: Record<Language, string>;
-  icon: React.ReactNode;
-  content: Record<Language, React.ReactNode>;
-}
-
-const translations = {
-  header: {
-    EN: "Vitalii Berbeha",
-    UA: "Віталій Бербеха",
-    RU: "Виталий Бербеха"
-  },
-  contactForm: {
-    name: {
-      EN: "Name",
-      UA: "Ім'я",
-      RU: "Имя"
-    },
-    email: {
-      EN: "Email",
-      UA: "Email",
-      RU: "Email"
-    },
-    message: {
-      EN: "Message",
-      UA: "Повідомлення",
-      RU: "Сообщение"
-    },
-    send: {
-      EN: "Send",
-      UA: "Надіслати",
-      RU: "Отправить"
-    }
-  }
-};
-
-const socialLinks = [
-  { icon: <Linkedin className="w-6 h-6" />, url: "https://linkedin.com/in/smmshaman" },
-  { icon: <MessageSquare className="w-6 h-6" />, url: "https://t.me/Your_Nickname" },
-  { icon: <Facebook className="w-6 h-6" />, url: "https://facebook.com/Your_Profile" },
-  { icon: <Instagram className="w-6 h-6" />, url: "https://instagram.com/Your_Profile" },
-  { icon: <Youtube className="w-6 h-6" />, url: "https://youtube.com/Your_Channel" },
-];
+import { Github, Linkedin, Mail, Twitter } from "lucide-react";
 
 const Index = () => {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>("EN");
-  const [openSection, setOpenSection] = useState<string | null>(null);
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+    const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const sections: Section[] = [
-    {
-      id: "about",
-      title: {
-        EN: "About Me",
-        UA: "Про мене",
-        RU: "Обо мне"
-      },
-      icon: <BookOpen className="w-8 h-8" />,
-      content: {
-        EN: <div className="space-y-4">
-          <p>Hello! My name is Vitalii Berbeha. I am a specialist with extensive experience in e-commerce, project management, and marketing.</p>
-          <ul className="list-disc list-inside">
-            <li>Project management</li>
-            <li>Sales analytics</li>
-            <li>Social media marketing</li>
-            <li>Product development and promotion on platforms like Amazon and Etsy</li>
-          </ul>
-        </div>,
-        UA: <div className="space-y-4">
-          <p>Привіт! Мене звати Віталій Бербеха. Я фахівець із багаторічним досвідом у сфері електронної комерції, управління проєктами та маркетингу.</p>
-          <ul className="list-disc list-inside">
-            <li>Управління проєктами</li>
-            <li>Аналітика продажів</li>
-            <li>Маркетинг у соціальних мережах</li>
-            <li>Розробка та просування продуктів на платформах Amazon та Etsy</li>
-          </ul>
-        </div>,
-        RU: <div className="space-y-4">
-          <p>Привет! Меня зовут Виталий Бербеха. Я специалист с многолетним опытом в области электронной коммерции, управления проектами и маркетинга.</p>
-          <ul className="list-disc list-inside">
-            <li>Управление проектами</li>
-            <li>Аналитика продаж</li>
-            <li>Маркетинг в социальных сетях</li>
-            <li>Разработка и продвижение продуктов на платформах Amazon и Etsy</li>
-          </ul>
-        </div>
-      }
-    },
-    // ... Additional sections will be added here
-  ];
-
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle contact form submission
-  };
-
   return (
-    <div className="min-h-screen flex flex-col bg-[#121212] text-white">
-      {/* Header */}
-      <header className="fixed top-0 w-full bg-[#1a1a1a] p-4 z-50">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">{translations.header[currentLanguage]}</h1>
-          <div className="flex items-center space-x-4">
-            <div className="flex space-x-2">
-              {["EN", "UA", "RU"].map((lang) => (
-                <button
-                  key={lang}
-                  onClick={() => setCurrentLanguage(lang as Language)}
-                  className={`px-3 py-1 rounded transition-colors ${
-                    currentLanguage === lang 
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600" 
-                      : "bg-gray-700 hover:bg-gray-600"
-                  }`}
-                >
-                  {lang}
-                </button>
-              ))}
+    <div className="min-h-screen bg-[#121212] text-white">
+      <div className="bento-grid">
+        {/* Welcome Card */}
+        <div className="bento-card col-span-2">
+          <h2 className="text-sm text-gray-400 mb-2">welcome</h2>
+          <h1 className="text-4xl font-bold mb-4">
+            Hi, I'm <span className="text-blue-400">Your Name</span>
+          </h1>
+          <p className="text-gray-300 text-lg">
+            A software developer with a passion for creating beautiful and functional web experiences
+          </p>
+        </div>
+
+        {/* About Card */}
+        <div className="bento-card row-span-2">
+          <h2 className="text-2xl font-bold mb-6">About me</h2>
+          <p className="text-gray-300 text-lg mb-6">
+            I specialize in building modern web applications using React, TypeScript, and other cutting-edge technologies.
+          </p>
+          <div className="space-y-4">
+            <p className="text-lg text-gray-400">My tools:</p>
+            <ul className="list-disc list-inside text-gray-300 text-lg space-y-2">
+              <li>React</li>
+              <li>TypeScript</li>
+              <li>Node.js</li>
+              <li>Tailwind CSS</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Time Card */}
+        <div className="bento-card">
+          <h2 className="text-lg text-gray-400 mb-4">Current Time</h2>
+          <p className="text-3xl font-bold font-mono">
+            {time.toLocaleTimeString()}
+          </p>
+        </div>
+
+        {/* Contact Card */}
+        <div className="bento-card">
+          <h2 className="text-2xl font-bold mb-6">Let's Connect</h2>
+          <div className="flex space-x-6">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
+               className="p-3 rounded-full hover:bg-gray-800 transition-colors">
+              <Github className="w-8 h-8" />
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+               className="p-3 rounded-full hover:bg-gray-800 transition-colors">
+              <Linkedin className="w-8 h-8" />
+            </a>
+            <a href="mailto:your@email.com"
+               className="p-3 rounded-full hover:bg-gray-800 transition-colors">
+              <Mail className="w-8 h-8" />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+               className="p-3 rounded-full hover:bg-gray-800 transition-colors">
+              <Twitter className="w-8 h-8" />
+            </a>
+          </div>
+        </div>
+
+        {/* Projects Card */}
+        <div className="bento-card col-span-2">
+          <h2 className="text-2xl font-bold mb-6">Featured Projects</h2>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="p-6 bg-card-hover rounded-lg">
+              <h3 className="text-xl font-bold mb-3">Project 1</h3>
+              <p className="text-gray-300">Description of your amazing project</p>
             </div>
-            <div className="flex space-x-4">
-              {socialLinks.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-white transition-colors hover:scale-110"
-                >
-                  {link.icon}
-                </a>
-              ))}
+            <div className="p-6 bg-card-hover rounded-lg">
+              <h3 className="text-xl font-bold mb-3">Project 2</h3>
+              <p className="text-gray-300">Description of another cool project</p>
             </div>
           </div>
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-grow mt-16 mb-16 p-8">
-        <div className="bento-grid">
-          {sections.map((section) => (
-            <div
-              key={section.id}
-              className="bento-card group cursor-pointer transition-all duration-300 hover:scale-105"
-              onClick={() => setOpenSection(section.id)}
-            >
-              <div className="flex flex-col items-center justify-center h-full space-y-4">
-                {section.icon}
-                <h2 className="text-xl font-semibold">{section.title[currentLanguage]}</h2>
-              </div>
-            </div>
-          ))}
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="fixed bottom-0 w-full bg-[#1a1a1a] p-4 text-center">
-        <p>{currentTime.toLocaleTimeString()}</p>
-        <p className="text-sm text-gray-400">
-          {currentLanguage === "EN" && "Made with ♥️ and attention to detail"}
-          {currentLanguage === "UA" && "Зроблено з ♥️ та увагою до деталей"}
-          {currentLanguage === "RU" && "Сделано с ♥️ и вниманием к деталям"}
-        </p>
-      </footer>
-
-      {/* Section Dialog */}
-      <Dialog open={!!openSection} onOpenChange={() => setOpenSection(null)}>
-        <DialogContent className="max-w-4xl">
-          <DialogHeader>
-            <DialogTitle>
-              {sections.find((s) => s.id === openSection)?.title[currentLanguage]}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="mt-4">
-            {sections.find((s) => s.id === openSection)?.content[currentLanguage]}
-          </div>
-        </DialogContent>
-      </Dialog>
+      </div>
     </div>
   );
 };
