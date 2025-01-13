@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BentoGrid from "@/components/sections/BentoGrid";
 import SectionDialog from "@/components/sections/SectionDialog";
+import ParticlesBackground from "@/components/background/ParticlesBackground";
 
 const Index = () => {
   const [openSection, setOpenSection] = useState<string | null>(null);
@@ -28,6 +29,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white">
+      <ParticlesBackground />
       <Header />
       
       <main className="flex-grow mt-[25vh] mb-[15vh]">
