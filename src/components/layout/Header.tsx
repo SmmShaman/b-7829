@@ -8,7 +8,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-[14vh] px-6 md:px-10 lg:px-12">
+    <header className="fixed top-0 left-0 right-0 z-50 h-[22.2vh] px-6 md:px-10 lg:px-12">
       <div className="h-full w-full max-w-6xl mx-auto">
         <div 
           className="relative h-full w-full overflow-hidden rounded-2xl border border-gray-800/20 shadow-xl bg-card/50"
