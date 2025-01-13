@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { translations } from "@/utils/translations";
 
 export type Language = "EN" | "UA" | "NO";
+export type TranslationKey = keyof typeof translations.en;
 
 export const useTranslations = () => {
   const [currentLanguage, setCurrentLanguage] = useState<Language>(() => {
@@ -15,7 +16,7 @@ export const useTranslations = () => {
     localStorage.setItem("preferredLanguage", newLanguage);
   }, []);
 
-  const t = useCallback((key: keyof typeof translations.en) => {
+  const t = useCallback((key: TranslationKey) => {
     const langKey = currentLanguage.toLowerCase() as keyof typeof translations;
     return translations[langKey][key];
   }, [currentLanguage]);

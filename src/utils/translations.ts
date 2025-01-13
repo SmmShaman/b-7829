@@ -28,7 +28,13 @@ export const translations = {
     sending: "Sending...",
     message_sent: "Message sent successfully!",
     error_sending: "Error sending message",
-    close: "Close"
+    close: "Close",
+    // Add map-related translations
+    webgl_error_title: "WebGL Error",
+    webgl_error_description: "Your browser does not support WebGL, which is required for the map.",
+    map_error_title: "Map Unavailable",
+    map_error_description: "The map could not be loaded due to technical limitations.",
+    location_error: "Could not get your location"
   },
   no: {
     title: "Vitalii Berbeha, en ekspert innen e-handel og markedsføring",
@@ -59,7 +65,13 @@ export const translations = {
     sending: "Sender...",
     message_sent: "Melding sendt!",
     error_sending: "Feil ved sending av melding",
-    close: "Lukk"
+    close: "Lukk",
+    // Add map-related translations
+    webgl_error_title: "WebGL-feil",
+    webgl_error_description: "Nettleseren din støtter ikke WebGL, som er nødvendig for kartet.",
+    map_error_title: "Kart utilgjengelig",
+    map_error_description: "Kartet kunne ikke lastes på grunn av tekniske begrensninger.",
+    location_error: "Kunne ikke hente posisjonen din"
   },
   ua: {
     title: "Віталій Бербеха, експерт з електронної комерції та маркетингу",
@@ -90,6 +102,12 @@ export const translations = {
     sending: "Надсилання...",
     message_sent: "Повідомлення надіслано!",
     error_sending: "Помилка при надсиланні",
-    close: "Закрити"
+    close: "Закрити",
+    // Add map-related translations
+    webgl_error_title: "Помилка WebGL",
+    webgl_error_description: "Ваш браузер не підтримує WebGL, який необхідний для карти.",
+    map_error_title: "Карта недоступна",
+    map_error_description: "Карту не вдалося завантажити через технічні обмеження.",
+    location_error: "Не вдалося отримати ваше місцезнаходження"
   }
 } as const;
