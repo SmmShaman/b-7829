@@ -42,6 +42,7 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
         <button 
           onClick={onClose}
           className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-10"
+          aria-label={t("close")}
         >
           <X className="w-6 h-6 text-white" />
         </button>
@@ -51,7 +52,7 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
             <div className="w-1/4 animate-slide-right">
               <img 
                 src={getSectionImage(openSection)}
-                alt={t(openSection)}
+                alt={t(`${openSection}_title`)}
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
@@ -61,7 +62,7 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
               ) : (
                 <div className="prose prose-invert max-w-none">
                   <h2 className="text-3xl font-bold mb-6 text-white">
-                    {t(openSection)}
+                    {t(`${openSection}_title`)}
                   </h2>
                   <div className="text-lg leading-relaxed text-white/90">
                     {t(`${openSection}_content`)}

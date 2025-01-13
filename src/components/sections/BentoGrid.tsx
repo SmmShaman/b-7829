@@ -21,37 +21,37 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   const sections: Section[] = [
     {
       id: "about",
-      titleKey: "about",
+      titleKey: "about_title",
       icon: <BookOpen className="w-8 h-8" />,
       gradient: "linear-gradient(225deg, rgba(255,226,159,0.1) 0%, rgba(255,169,159,0.1) 48%, rgba(255,113,154,0.1) 100%)"
     },
     {
       id: "services",
-      titleKey: "services",
+      titleKey: "services_title",
       icon: <Wrench className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(255,200,169,0.1) 0%, rgba(236,106,140,0.1) 100%)"
     },
     {
       id: "skills",
-      titleKey: "skills",
+      titleKey: "skills_title",
       icon: <BarChart2 className="w-8 h-8" />,
       gradient: "linear-gradient(102.3deg, rgba(147,39,143,0.1) 5.9%, rgba(234,172,232,0.1) 64%)"
     },
     {
       id: "projects",
-      titleKey: "projects",
+      titleKey: "projects_title",
       icon: <Briefcase className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(157,178,217,0.1) 0%, rgba(24,54,126,0.1) 100%)"
     },
     {
       id: "testimonials",
-      titleKey: "testimonials",
+      titleKey: "testimonials_title",
       icon: <MessageSquare className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(136,219,159,0.1) 0%, rgba(229,236,121,0.1) 100%)"
     },
     {
       id: "contact",
-      titleKey: "contact",
+      titleKey: "contact_title",
       icon: <Mail className="w-8 h-8" />,
       gradient: "linear-gradient(90deg, rgba(252,180,103,0.1) 0%, rgba(247,129,129,0.1) 100%)"
     }
