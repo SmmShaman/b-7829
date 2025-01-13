@@ -8,8 +8,8 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full bg-[#1A1F2C]/80 backdrop-blur-md border-b border-gray-800 shadow-lg py-4">
-      <div className="w-full h-full px-4 md:px-8 flex flex-col md:flex-row items-center justify-between">
+    <header className="w-full h-full bg-[#1A1F2C]/80 backdrop-blur-md border-b border-gray-800 shadow-lg flex items-center">
+      <div className="w-full h-full px-4 md:px-8 flex flex-col md:flex-row items-center justify-between py-2">
         <div className="flex-1 text-center">
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-transparent bg-clip-text animate-fade-in">
             Vitalii Berbeha

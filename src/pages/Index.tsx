@@ -28,21 +28,21 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white">
-      {/* Fixed Header */}
-      <div className="fixed top-0 left-0 right-0 z-50">
+      {/* Fixed Header - 12vh height */}
+      <div className="fixed top-0 left-0 right-0 z-50 h-[12vh]">
         <Header />
       </div>
       
-      {/* Main Content with Padding */}
-      <main className="flex-grow flex items-center justify-center mt-[20vh] mb-[10vh]">
+      {/* Main Content with adjusted padding for header and footer */}
+      <main className="flex-grow flex items-center justify-center mt-[12vh] mb-[6vh] min-h-[76vh] py-[3vh]">
         <BentoGrid 
           onSectionClick={handleCardClick}
           expandingCard={expandingCard}
         />
       </main>
 
-      {/* Fixed Footer */}
-      <div className="fixed bottom-0 left-0 right-0 z-50">
+      {/* Fixed Footer - 6vh height */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 h-[6vh]">
         <Footer />
       </div>
 
