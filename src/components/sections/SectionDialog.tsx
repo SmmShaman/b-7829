@@ -32,6 +32,44 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
     }
   };
 
+  const getTitleKey = (section: string): keyof typeof translations.en => {
+    switch (section) {
+      case "about":
+        return "about_title";
+      case "projects":
+        return "projects_title";
+      case "services":
+        return "services_title";
+      case "skills":
+        return "skills_title";
+      case "testimonials":
+        return "testimonials_title";
+      case "contact":
+        return "contact_title";
+      default:
+        return "title";
+    }
+  };
+
+  const getContentKey = (section: string): keyof typeof translations.en => {
+    switch (section) {
+      case "about":
+        return "about_content";
+      case "projects":
+        return "projects_content";
+      case "services":
+        return "services_content";
+      case "skills":
+        return "skills_content";
+      case "testimonials":
+        return "testimonials_content";
+      case "contact":
+        return "contact_description";
+      default:
+        return "description";
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div 
@@ -53,7 +91,7 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
               <img 
                 src={getSectionImage(openSection)}
-                alt={t(`${openSection}_title`)}
+                alt={t(getTitleKey(openSection))}
                 className="w-full h-full object-cover transition-transform duration-500 ease-out hover:scale-105"
               />
             </div>
@@ -63,10 +101,10 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
               ) : (
                 <div className="prose prose-invert max-w-none">
                   <h2 className="text-3xl font-bold mb-6 text-white">
-                    {t(`${openSection}_title`)}
+                    {t(getTitleKey(openSection))}
                   </h2>
                   <div className="text-lg leading-relaxed text-white/90 whitespace-pre-line">
-                    {t(`${openSection}_content`)}
+                    {t(getContentKey(openSection))}
                   </div>
                 </div>
               )}
