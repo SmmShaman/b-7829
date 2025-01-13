@@ -1,6 +1,6 @@
 import { Mail, Twitter, Facebook, MessageCircle, Linkedin, Instagram } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useTranslations } from "@/hooks/useTranslations";
+import { useTranslations, Language } from "@/hooks/useTranslations";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -20,10 +20,10 @@ const Footer = () => {
     { icon: <Linkedin className="w-4 h-4 md:w-5 md:h-5" />, url: "https://linkedin.com" },
   ];
 
-  const languages = [
-    { code: 'en', label: 'EN' },
-    { code: 'no', label: 'NO' },
-    { code: 'ua', label: 'UA' }
+  const languages: { code: Language; label: string }[] = [
+    { code: 'EN', label: 'EN' },
+    { code: 'NO', label: 'NO' },
+    { code: 'UA', label: 'UA' }
   ];
 
   return (
@@ -53,7 +53,7 @@ const Footer = () => {
                     className={`text-white hover:text-white ${
                       currentLanguage === lang.code ? 'bg-white/20' : 'hover:bg-white/10'
                     }`}
-                    onClick={() => setCurrentLanguage(lang.code.toUpperCase())}
+                    onClick={() => setCurrentLanguage(lang.code)}
                   >
                     {lang.label}
                   </Button>
