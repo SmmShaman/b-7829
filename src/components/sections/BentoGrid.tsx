@@ -22,53 +22,53 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
 
   const sections: Section[] = [
     {
-      id: "about",
-      titleKey: "about_title",
-      descriptionKey: "about_content",
-      icon: <BookOpen className="w-8 h-8" />,
-      gradient: "linear-gradient(225deg, rgba(255,226,159,0.85) 0%, rgba(255,169,159,0.85) 48%, rgba(255,113,154,0.85) 100%)",
-      backgroundImage: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=800&q=80"
+      id: "1",
+      titleKey: "section1.title",
+      descriptionKey: "section1.description",
+      icon: <BookOpen />,
+      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      backgroundImage: "/path-to-image-1.jpg",
     },
     {
-      id: "services",
-      titleKey: "services_title",
-      descriptionKey: "services_content",
-      icon: <Wrench className="w-8 h-8" />,
-      gradient: "linear-gradient(90deg, rgba(255,200,169,0.85) 0%, rgba(236,106,140,0.85) 100%)",
-      backgroundImage: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=800&q=80"
+      id: "2",
+      titleKey: "section2.title",
+      descriptionKey: "section2.description",
+      icon: <Briefcase />,
+      gradient: "linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)",
+      backgroundImage: "/path-to-image-2.jpg",
     },
     {
-      id: "skills",
-      titleKey: "skills_title",
-      descriptionKey: "skills_content",
-      icon: <BarChart2 className="w-8 h-8" />,
-      gradient: "linear-gradient(102.3deg, rgba(147,39,143,0.85) 5.9%, rgba(234,172,232,0.85) 64%)",
-      backgroundImage: "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&w=800&q=80"
+      id: "3",
+      titleKey: "section3.title",
+      descriptionKey: "section3.description",
+      icon: <Wrench />,
+      gradient: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
+      backgroundImage: "/path-to-image-3.jpg",
     },
     {
-      id: "projects",
-      titleKey: "projects_title",
-      descriptionKey: "projects_content",
-      icon: <Briefcase className="w-8 h-8" />,
-      gradient: "linear-gradient(90deg, rgba(157,178,217,0.85) 0%, rgba(24,54,126,0.85) 100%)",
-      backgroundImage: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80"
+      id: "4",
+      titleKey: "section4.title",
+      descriptionKey: "section4.description",
+      icon: <BarChart2 />,
+      gradient: "linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)",
+      backgroundImage: "/path-to-image-4.jpg",
     },
     {
-      id: "testimonials",
-      titleKey: "testimonials_title",
-      descriptionKey: "testimonials_content",
-      icon: <MessageSquare className="w-8 h-8" />,
-      gradient: "linear-gradient(90deg, rgba(136,219,159,0.85) 0%, rgba(229,236,121,0.85) 100%)",
-      backgroundImage: "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800&q=80"
+      id: "5",
+      titleKey: "section5.title",
+      descriptionKey: "section5.description",
+      icon: <MessageSquare />,
+      gradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
+      backgroundImage: "/path-to-image-5.jpg",
     },
     {
-      id: "contact",
-      titleKey: "contact_title",
-      descriptionKey: "contact_content",
-      icon: <Mail className="w-8 h-8" />,
-      gradient: "linear-gradient(90deg, rgba(252,180,103,0.85) 0%, rgba(247,129,129,0.85) 100%)",
-      backgroundImage: "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?auto=format&fit=crop&w=800&q=80"
-    }
+      id: "6",
+      titleKey: "section6.title",
+      descriptionKey: "section6.description",
+      icon: <Mail />,
+      gradient: "linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)",
+      backgroundImage: "/path-to-image-6.jpg",
+    },
   ];
 
   const handleCardClick = async (sectionId: string, index: number) => {
