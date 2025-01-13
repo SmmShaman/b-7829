@@ -15,7 +15,7 @@ const BentoGrid: React.FC<BentoGridProps> = ({ onSectionClick, expandingCard }) 
     {
       id: "about",
       title: t("about"),
-      description: t("about_description"),
+      bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
       content: null,
     },
     {
@@ -56,7 +56,7 @@ const BentoGrid: React.FC<BentoGridProps> = ({ onSectionClick, expandingCard }) 
         {sections.map((section) => (
           <motion.div
             key={section.id}
-            className={`relative bg-card hover:bg-card-hover rounded-lg p-6 cursor-pointer transition-colors h-[calc((100vh-33.3vh-4rem)/2)] flex flex-col justify-between ${
+            className={`relative bg-card hover:bg-card-hover rounded-lg cursor-pointer transition-colors h-[calc((100vh-33.3vh-4rem)/2)] flex flex-col justify-between overflow-hidden ${
               expandingCard === section.id ? "snake-animation snake-expanded" : ""
             }`}
             onClick={() => onSectionClick(section.id)}
@@ -64,9 +64,24 @@ const BentoGrid: React.FC<BentoGridProps> = ({ onSectionClick, expandingCard }) 
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div>
-              <h3 className="text-xl font-bold mb-2">{section.title}</h3>
-              <p className="text-gray-400">{section.description}</p>
+            {section.bgImage && (
+              <div 
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{ 
+                  backgroundImage: `url(${section.bgImage})`,
+                  opacity: 0.5
+                }}
+              />
+            )}
+            <div className="relative flex items-center justify-center h-full w-full p-6">
+              {section.id === "about" ? (
+                <h3 className="text-3xl font-bold text-white">{section.title}</h3>
+              ) : (
+                <div>
+                  <h3 className="text-xl font-bold mb-2">{section.title}</h3>
+                  <p className="text-gray-400">{section.description}</p>
+                </div>
+              )}
             </div>
             {section.content}
           </motion.div>
