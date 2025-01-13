@@ -99,8 +99,8 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="flex items-center justify-center min-h-[50vh] w-full px-6 md:px-10 lg:px-12 mb-24">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 w-full max-w-6xl mx-auto">
+    <div className="flex items-center justify-start min-h-[50vh] w-full px-6 md:px-10 lg:px-12 mb-24 overflow-y-auto md:overflow-visible md:items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 w-full max-w-6xl mx-auto py-6 md:py-0">
         {sections.map((section, index) => (
           <div
             key={section.id}
