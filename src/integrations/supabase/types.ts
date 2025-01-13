@@ -121,6 +121,7 @@ export type Database = {
           id: string
           key: string
           no_text: string
+          ru_text: string | null
           ua_text: string
           updated_at: string
         }
@@ -130,6 +131,7 @@ export type Database = {
           id?: string
           key: string
           no_text: string
+          ru_text?: string | null
           ua_text: string
           updated_at?: string
         }
@@ -139,6 +141,7 @@ export type Database = {
           id?: string
           key?: string
           no_text?: string
+          ru_text?: string | null
           ua_text?: string
           updated_at?: string
         }

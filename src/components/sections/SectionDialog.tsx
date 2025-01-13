@@ -49,12 +49,18 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
         
         <ScrollArea className="h-[80vh] w-full">
           <div className="flex p-8">
-            <div className="w-1/4 animate-slide-right">
-              <img 
-                src={getSectionImage(openSection)}
-                alt={t(`${openSection}_title`)}
-                className="w-full h-full object-cover rounded-lg"
-              />
+            <div className="w-1/4 animate-slide-in-right">
+              <div className="relative h-full">
+                <img 
+                  src={getSectionImage(openSection)}
+                  alt={t(`${openSection}_title`)}
+                  className="w-full h-[calc(80vh-4rem)] object-cover rounded-lg transition-transform duration-500 ease-out transform translate-x-0"
+                  style={{
+                    maxHeight: 'calc(80vh - 4rem)',
+                    objectFit: 'cover',
+                  }}
+                />
+              </div>
             </div>
             <div className="flex-1 pl-8">
               {openSection === "contact" ? (
