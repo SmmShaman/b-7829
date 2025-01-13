@@ -65,7 +65,7 @@ const SectionDialog = ({ openSection, onClose }: SectionDialogProps) => {
                   <h2 className="text-3xl font-bold mb-6 text-white">
                     {t(`${openSection}_title`)}
                   </h2>
-                  <div className="text-lg leading-relaxed text-white/90">
+                  <div className="text-lg leading-relaxed text-white/90 whitespace-pre-line">
                     {t(`${openSection}_content`)}
                   </div>
                 </div>
