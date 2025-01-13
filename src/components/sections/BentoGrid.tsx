@@ -8,6 +8,7 @@ interface Section {
   descriptionKey: string;
   icon: React.ReactNode;
   gradient: string;
+  backgroundImage: string;
 }
 
 interface BentoGridProps {
@@ -25,42 +26,48 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       titleKey: "about_title",
       descriptionKey: "about_content",
       icon: <BookOpen className="w-8 h-8" />,
-      gradient: "linear-gradient(225deg, rgba(255,226,159,0.05) 0%, rgba(255,169,159,0.05) 48%, rgba(255,113,154,0.05) 100%)"
+      gradient: "linear-gradient(225deg, rgba(255,226,159,0.85) 0%, rgba(255,169,159,0.85) 48%, rgba(255,113,154,0.85) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: "services",
       titleKey: "services_title",
       descriptionKey: "services_content",
       icon: <Wrench className="w-8 h-8" />,
-      gradient: "linear-gradient(90deg, rgba(255,200,169,0.05) 0%, rgba(236,106,140,0.05) 100%)"
+      gradient: "linear-gradient(90deg, rgba(255,200,169,0.85) 0%, rgba(236,106,140,0.85) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: "skills",
       titleKey: "skills_title",
       descriptionKey: "skills_content",
       icon: <BarChart2 className="w-8 h-8" />,
-      gradient: "linear-gradient(102.3deg, rgba(147,39,143,0.05) 5.9%, rgba(234,172,232,0.05) 64%)"
+      gradient: "linear-gradient(102.3deg, rgba(147,39,143,0.85) 5.9%, rgba(234,172,232,0.85) 64%)",
+      backgroundImage: "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: "projects",
       titleKey: "projects_title",
       descriptionKey: "projects_content",
       icon: <Briefcase className="w-8 h-8" />,
-      gradient: "linear-gradient(90deg, rgba(157,178,217,0.05) 0%, rgba(24,54,126,0.05) 100%)"
+      gradient: "linear-gradient(90deg, rgba(157,178,217,0.85) 0%, rgba(24,54,126,0.85) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: "testimonials",
       titleKey: "testimonials_title",
       descriptionKey: "testimonials_content",
       icon: <MessageSquare className="w-8 h-8" />,
-      gradient: "linear-gradient(90deg, rgba(136,219,159,0.05) 0%, rgba(229,236,121,0.05) 100%)"
+      gradient: "linear-gradient(90deg, rgba(136,219,159,0.85) 0%, rgba(229,236,121,0.85) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800&q=80"
     },
     {
       id: "contact",
       titleKey: "contact_title",
       descriptionKey: "contact_content",
       icon: <Mail className="w-8 h-8" />,
-      gradient: "linear-gradient(90deg, rgba(252,180,103,0.05) 0%, rgba(247,129,129,0.05) 100%)"
+      gradient: "linear-gradient(90deg, rgba(252,180,103,0.85) 0%, rgba(247,129,129,0.85) 100%)",
+      backgroundImage: "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?auto=format&fit=crop&w=800&q=80"
     }
   ];
 
@@ -68,7 +75,6 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
     const clickedCard = cardRefs.current.get(sectionId);
     if (!clickedCard) return;
 
-    // Add fade-out animation to non-clicked cards
     cardRefs.current.forEach((card, id) => {
       if (id !== sectionId) {
         card.style.animation = 'fadeOut 0.5s ease-out forwards';
@@ -76,12 +82,9 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
       }
     });
 
-    // Add expand animation to clicked card
     clickedCard.style.animation = 'expandCard 0.8s ease-out forwards';
     
-    // Wait for animations to complete
     await new Promise(resolve => setTimeout(resolve, 800));
-    
     onSectionClick(sectionId);
   };
 
@@ -96,27 +99,37 @@ const BentoGrid = ({ onSectionClick, expandingCard }: BentoGridProps) => {
   }, [expandingCard]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-[80vw] mx-auto h-[calc(100vh-40vh)] mt-[20vh] mb-[20vh]">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-[90vw] max-w-7xl mx-auto h-[calc(100vh-40vh)] mt-[15vh] mb-[15vh]">
       {sections.map((section, index) => (
         <div
           key={section.id}
           ref={el => el && cardRefs.current.set(section.id, el)}
-          className="relative overflow-hidden rounded-[2rem] aspect-square cursor-pointer transform transition-all duration-300 hover:scale-105 border border-gray-800"
+          className="relative overflow-hidden rounded-[2rem] aspect-square cursor-pointer transform transition-all duration-300 hover:scale-105 hover:-translate-y-2 border border-gray-800/20"
           onClick={() => handleCardClick(section.id, index)}
           style={{
-            background: section.gradient,
-            boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-            backdropFilter: 'blur(5px)',
+            backgroundImage: `url(${section.backgroundImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
           }}
         >
-          <div className="absolute inset-0 bg-black/80" />
-          <div className="relative h-full p-6 flex flex-col items-center justify-center text-white">
-            <div className="mb-4 transform transition-transform group-hover:scale-110">
+          <div 
+            className="absolute inset-0" 
+            style={{ 
+              background: section.gradient,
+              backdropFilter: 'blur(8px)',
+            }} 
+          />
+          <div className="relative h-full p-8 flex flex-col items-center justify-center text-white">
+            <div className="mb-6 transform transition-transform group-hover:scale-110 bg-white/10 p-4 rounded-full">
               {section.icon}
             </div>
-            <h2 className="text-2xl font-bold text-center">
+            <h2 className="text-2xl font-bold text-center mb-3">
               {t(section.titleKey)}
             </h2>
+            <p className="text-sm text-center text-white/80">
+              {t(section.descriptionKey)}
+            </p>
           </div>
         </div>
       ))}
