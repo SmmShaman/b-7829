@@ -28,7 +28,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] text-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-yellow-400 to-orange-500 text-white">
       <ParticlesBackground />
       <Header />
       
